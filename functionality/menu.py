@@ -31,8 +31,9 @@ class Menu:
 
 
 class Executor:
-    def enter_text_to_encrypt(self):
+    def enter_text_to_encrypt(self) -> str:
         text_to_encrypt = input("Enter text: ")
+        return text_to_encrypt
 
     def do_sth_two(self):
         pass
