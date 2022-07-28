@@ -1,16 +1,12 @@
-from functionality.cipher import Cipher
-
-
 class Menu:
     def __init__(self):
         self.executor = Executor()
-        self.cipher = Cipher()
         self.options = {
             1: self.executor.enter_text_to_encrypt,
-            2: self.executor.do_sth_two,
-            3: self.executor.do_sth_three,
-            4: self.executor.do_sth_four,
-            5: self.executor.do_sth_five,
+            2: self.executor.encrypt_rot13,
+            3: self.executor.encrypt_rot47,
+            4: self.executor.decrypt,
+            5: self.executor.exit_programm,
         }
 
     def show_menu(self) -> None:
@@ -26,28 +22,48 @@ class Menu:
     def show_error():
         print("Error!")
 
-    def execute(self, choice: int):
+    def execute(self, choice: int) -> None:
         self.options.get(choice, self.show_error)()
 
 
 class Executor:
-    def enter_text_to_encrypt(self) -> str:
+    @staticmethod
+    def enter_text_to_encrypt():
         text_to_encrypt = input("Enter text: ")
+        Executor.write_text(text_to_encrypt)
         return text_to_encrypt
 
-    def do_sth_two(self):
-        pass
+    def encrypt_rot13(self, text):
+        ROT13 = 13
+        encrypted_text_rot13 = ""
+        for letter in range(len(text)):
+            if ord(text[letter]) > 122 - ROT13:
+                encrypted_text_rot13 += chr(ord(text[letter]) + ROT13 - 26)
+            else:
+                encrypted_text_rot13 += chr(ord(text[letter]) + ROT13)
+        return encrypted_text_rot13
 
-    def do_sth_three(self):
-        pass
+    def encrypt_rot47(self, text):
+        encrypted_text_rot47 = ""
+        for letter in range(len(text)):
+            j = ord(text[letter])
+            if 33 <= j <= 126:
+                encrypted_text_rot47 += chr(33 + (j + 14) % 94)
+            else:
+                encrypted_text_rot47 += text[letter]
+        return encrypted_text_rot47
 
-    def do_sth_four(self):
+    def decrypt(self):
         pass
 
     @staticmethod
-    def do_sth_five():
+    def exit_programm():
         print("Bye. Hope to see you again :)")
         exit()
+
+    def write_text(self, text):
+        with open ("text_to_encrypt.txt", "-w", encoding="utf-8") as f:
+            f.write(text)
 
 
 def main():
