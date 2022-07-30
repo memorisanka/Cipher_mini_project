@@ -1,62 +1,68 @@
-from __future__ import annotations
-
-
 class Menu:
-    def __init__(self):
-        self._encrypt = encrypt or Encrypt()
-        self._decrypt = decrypt or Decrypt()
+    def __init__(self) -> None:
+        self._cipher = cipher or Cipher()
         self.options = {
-            1: self._encrypt.enter_text_to_encrypt,
-            2: self._encrypt.encrypt_rot13,
-            3: self._encrypt.encrypt_rot47,
-            4: "self.executor.decrypt",
-            5: menu.exit_programm(),
+            1: self._cipher.rot13,
+            2: self._cipher.rot47,
+            3: self._cipher.rot13,
+            4: Menu.exit_programm,
         }
 
-    def operation(self) -> None:
+    @staticmethod
+    def operation() -> None:
         menu.show_menu()
 
     def show_menu(self) -> None:
         choice = int(
             input(
-                "Choose any option:\n1. Enter text to encrypt \n2. Encrypt using ROT13 \n"
-                "3. Encrypt using ROT47 \n4. Decrypt text \n5. Exit programm\n--> "
+                "Choose any option:\n------------------------\n1. Encrypt using ROT13 \n"
+                "2. Encrypt using ROT47 \n3. Decrypt text \n4. Exit programm\n--> "
             )
         )
         self.execute(choice)
 
     @staticmethod
-    def show_error():
+    def show_error() -> None:
         print("Error!")
 
     def execute(self, choice: int) -> None:
         self.options.get(choice, self.show_error)()
 
     @staticmethod
-    def exit_programm():
+    def exit_programm() -> None:
         print("Bye. Hope to see you again :)")
         exit()
 
 
-class Encrypt:
+class Cipher:
+    """The same function encrypt and decrypt ROT13, so as ROT47. Running the function once again on encrypted text
+    cause decryption."""
+
     def __init__(self):
         self.text = ""
 
     def enter_text_to_encrypt(self):
         self.text = input("Enter text: ")
+        cipher.write_file()
 
-    def encrypt_rot13(self):
-        ROT13 = 13
-        encrypted_text_rot13 = ""
-        for letter in range(len(self.text)):
-            if ord(self.text[letter]) > 122 - ROT13:
-                encrypted_text_rot13 += chr(ord(self.text[letter]) + ROT13 - 26)
-            else:
-                encrypted_text_rot13 += chr(ord(self.text[letter]) + ROT13)
-        print(encrypted_text_rot13)
-        return encrypted_text_rot13
+    def rot13(self):
+        cipher.enter_text_to_encrypt()
 
-    def encrypt_rot47(self):
+        encrypted_rot13 = "".join(
+            [
+                chr((ord(letter) - 97 + 13) % 26 + 97)
+                if 97 <= ord(letter) <= 122
+                else letter
+                for letter in self.text.lower()
+            ]
+        )
+
+        print(encrypted_rot13)
+        return encrypted_rot13
+
+    def rot47(self):
+        cipher.enter_text_to_encrypt()
+
         encrypted_text_rot47 = ""
         for letter in range(len(self.text)):
             j = ord(self.text[letter])
@@ -67,13 +73,13 @@ class Encrypt:
         print(encrypted_text_rot47)
         return encrypted_text_rot47
 
+    def write_file(self):
+        with open("text_to_encrypt.txt", "w",  encoding="utf-8") as f:
+            f.write(self.text)
 
-class Decrypt:
-    def operation1(self) -> str:
-        pass
-
-    def operation_z(self) -> str:
-        pass
+    def read_file(self):
+        with open("text_to_encrypt.txt", "r", encoding="utf-8") as f:
+            f.read()
 
 
 def client_code(menu: Menu) -> None:
@@ -81,7 +87,6 @@ def client_code(menu: Menu) -> None:
 
 
 if __name__ == "__main__":
-    encrypt = Encrypt()
-    decrypt = Decrypt()
+    cipher = Cipher()
     menu = Menu()
     client_code(menu)
