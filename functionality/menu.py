@@ -8,11 +8,13 @@ class Menu:
             4: Menu.exit_programm,
         }
 
-    @staticmethod
-    def operation() -> None:
-        menu.show_menu()
+    def operation(self) -> None:
+
+        while True:
+            menu.show_menu()
 
     def show_menu(self) -> None:
+
         choice = int(
             input(
                 "Choose any option:\n------------------------\n1. Encrypt using ROT13 \n"
@@ -80,6 +82,9 @@ class Cipher:
     def read_file(self):
         with open("text_to_encrypt.txt", "r", encoding="utf-8") as f:
             f.read()
+
+    def buffer(self):
+        self.buffer = []
 
 
 def client_code(menu: Menu) -> None:
