@@ -6,7 +6,7 @@ class Menu:
             2: self._cipher.encrypt_rot47,
             3: self._cipher.decrypt_rot13,
             4: self._cipher.decrypt_rot47,
-            5: self._cipher.show_buffer,
+            5: self._cipher.write_buffer_to_file,
             6: self._cipher.show_buffer,
             7: Menu.exit_programm,
         }
@@ -22,7 +22,7 @@ class Menu:
             input(
                 "Choose any option:\n------------------------\n1. Encrypt using ROT13 \n"
                 "2. Encrypt using ROT47 \n3. Decrypt text using ROT13 \n4. Decrypt text using ROT47\n"
-                "5. Save in buffer\n6. Read from buffer\n7. Exit programm\n--> "
+                "5. Save in file\n6. Read from buffer\n7. Exit programm\n--> "
             )
         )
         self.execute(choice)
@@ -122,6 +122,11 @@ class Cipher:
     def show_buffer(self):
         for txt in self.buffer:
             print(txt)
+
+    def write_buffer_to_file(self):
+        with open("buffer.txt", "a",  encoding="utf-8") as f:
+            for i in self.buffer:
+                f.write(i + "\n")
 
 
 def client_code(menu: Menu) -> None:
