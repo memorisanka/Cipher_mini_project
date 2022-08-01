@@ -2,10 +2,13 @@ class Menu:
     def __init__(self) -> None:
         self._cipher = cipher or Cipher()
         self.options = {
-            1: self._cipher.rot13,
-            2: self._cipher.rot47,
-            3: self._cipher.rot13,
-            4: Menu.exit_programm,
+            1: self._cipher.encrypt_rot13,
+            2: self._cipher.encrypt_rot47,
+            3: self._cipher.decrypt_rot13,
+            4: self._cipher.decrypt_rot47,
+            5: self._cipher.show_buffer,
+            6: self._cipher.show_buffer,
+            7: Menu.exit_programm,
         }
 
     def operation(self) -> None:
@@ -18,7 +21,8 @@ class Menu:
         choice = int(
             input(
                 "Choose any option:\n------------------------\n1. Encrypt using ROT13 \n"
-                "2. Encrypt using ROT47 \n3. Decrypt text \n4. Exit programm\n--> "
+                "2. Encrypt using ROT47 \n3. Decrypt text using ROT13 \n4. Decrypt text using ROT47\n"
+                "5. Save in buffer\n6. Read from buffer\n7. Exit programm\n--> "
             )
         )
         self.execute(choice)
@@ -42,12 +46,13 @@ class Cipher:
 
     def __init__(self):
         self.text = ""
+        self.buffer = []
 
     def enter_text_to_encrypt(self):
         self.text = input("Enter text: ")
         cipher.write_file()
 
-    def rot13(self):
+    def encrypt_rot13(self):
         cipher.enter_text_to_encrypt()
 
         encrypted_rot13 = "".join(
@@ -59,10 +64,12 @@ class Cipher:
             ]
         )
 
-        print(encrypted_rot13)
+        self.buffer.append(encrypted_rot13)
+
+        print(f"Text after encryption: {encrypted_rot13}\n")
         return encrypted_rot13
 
-    def rot47(self):
+    def encrypt_rot47(self):
         cipher.enter_text_to_encrypt()
 
         encrypted_text_rot47 = ""
@@ -72,7 +79,36 @@ class Cipher:
                 encrypted_text_rot47 += chr(33 + (j + 14) % 94)
             else:
                 encrypted_text_rot47 += self.text[letter]
-        print(encrypted_text_rot47)
+
+        self.buffer.append(encrypted_text_rot47)
+
+        print(f"Text after encryption: {encrypted_text_rot47}\n")
+        return encrypted_text_rot47
+
+    def decrypt_rot13(self):
+
+        encrypted_rot13 = "".join(
+            [
+                chr((ord(letter) - 97 + 13) % 26 + 97)
+                if 97 <= ord(letter) <= 122
+                else letter
+                for letter in self.text.lower()
+            ]
+        )
+
+        print(f"Text after encryption ROT13: {encrypted_rot13}")
+        return encrypted_rot13
+
+    def decrypt_rot47(self):
+
+        encrypted_text_rot47 = ""
+        for letter in range(len(self.text)):
+            j = ord(self.text[letter])
+            if 33 <= j <= 126:
+                encrypted_text_rot47 += chr(33 + (j + 14) % 94)
+            else:
+                encrypted_text_rot47 += self.text[letter]
+        print(f"Text after encryption ROT47: {encrypted_text_rot47}")
         return encrypted_text_rot47
 
     def write_file(self):
@@ -83,8 +119,9 @@ class Cipher:
         with open("text_to_encrypt.txt", "r", encoding="utf-8") as f:
             f.read()
 
-    def buffer(self):
-        self.buffer = []
+    def show_buffer(self):
+        for txt in self.buffer:
+            print(txt)
 
 
 def client_code(menu: Menu) -> None:
