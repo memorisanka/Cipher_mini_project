@@ -33,8 +33,8 @@ class Manager:
     @staticmethod
     def __show_menu() -> None:
         io.print_text(
-            "What you want to do?",
-            "Pick the number",
+            "What do you want to do?",
+            "Pick the number:",
             "1. Encrypt text (ROT47/ROT13)",
             "3. Peak buffer",
             "5. Exit"
