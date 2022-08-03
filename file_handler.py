@@ -9,11 +9,14 @@ class FileHandler:
 
     @staticmethod
     def write_json(file_name: str, data: dict):
-        with open(f'{file_name}.json', 'w') as f:
+        with open(f"{file_name}.json", "w") as f:
             json.dump(data, f)
 
-    def read_json(self):
-        pass
-
+    @staticmethod
+    def read_json(file_name: str):
+        with open(f"{file_name}.json", "r") as f:
+            data = json.load(f)
+        
+        print(data)
 
 # FILEHANDLER files, czy istnieje
