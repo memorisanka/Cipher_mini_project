@@ -16,7 +16,7 @@ class FileHandler:
     def read_json(file_name: str):
         with open(f"{file_name}.json", "r") as f:
             data = json.load(f)
-        
+
         print(data)
 
 # FILEHANDLER files, czy istnieje

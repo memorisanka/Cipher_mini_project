@@ -38,16 +38,21 @@ class Manager:
             "Pick the number:",
             "1. Encrypt text (ROT47/ROT13)",
             "3. Peak buffer",
-            "5. Exit"
+            "5. Exit",
+            "---> "
         )
 
-    def __encrypt_text(self):
+    def __encrypt_text(self) -> None:
         rot: Rot = self.__get_encryptor()
-        text: str = io.read("Pls write down text to encrypt:")
+        text: str = io.read("Pls write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
         encrypted_text = {"Rot13": encoded_text}
-        # TODO Klasa pomocnicza do dicta,Property class mehtod na create. rot: str, text:str
+        # TODO Klasa pomocnicza do dicta,Property class method na create. rot: str, text:str
         self.__buffer.add(encrypted_text)
+
+    @classmethod
+    def __create_dict(cls, rot: str, txt: str):
+        pass
 
     def __get_encryptor(self) -> Rot:
         io.print_text(
