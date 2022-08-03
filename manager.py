@@ -2,6 +2,7 @@ from typing import Union, Callable
 from input_output_handler import InputOutputHandler as io
 from rot import Rot13, Rot47, Rot
 from buffer import Buffer
+from file_handler import FileHandler as fh
 
 
 class Manager:
