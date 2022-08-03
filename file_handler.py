@@ -1,15 +1,18 @@
 import os
+import json
 
 
 class FileHandler:
     @staticmethod
-    def check(file: str):
-        return os.path.isdir((os.getcwd() + f"/{file}"))
+    def check(file_name: str):
+        return os.path.isdir((os.getcwd() + f"/{file_name}"))
 
-    def write(self):
-        pass
+    @staticmethod
+    def write_json(file_name: str, data: dict):
+        with open(f'{file_name}.json', 'w') as f:
+            json.dump(data, f)
 
-    def read(self):
+    def read_json(self):
         pass
 
 
