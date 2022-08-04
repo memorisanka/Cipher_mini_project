@@ -46,13 +46,21 @@ class Manager:
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Pls write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
-        encrypted_text = {"Rot13": encoded_text}
+        encrypted_text = self.__create_dict(rot, text, encoded_text)
         # TODO Klasa pomocnicza do dicta,Property class method na create. rot: str, text:str
         self.__buffer.add(encrypted_text)
+        # self.__create_dict(rot, text, encoded_text)
 
-    @classmethod
-    def __create_dict(cls, rot: str, txt: str):
-        pass
+    def __create_dict(self, rot, text: str, encrypted_text: str):
+        rot = rot.rot_type()
+        buffer = {}
+
+        if rot not in buffer.keys():
+            buffer = {rot: [text, encrypted_text]}
+        else:
+            buffer += {rot: [text, encrypted_text]}
+
+        return buffer
 
     def __get_encryptor(self) -> Rot:
         io.print_text(
