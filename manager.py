@@ -9,9 +9,11 @@ class Manager:
     def __init__(self) -> None:
         self.__is_running = True
         self.__buffer = Buffer()
+        self.__buffer_dict = Buffer()
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "3": self.__buffer.peak,
+            "4": self.__buffer_dict.show_buffer_dict,
             "5": self.__end_application,
         }
 
@@ -38,29 +40,18 @@ class Manager:
             "Pick the number:",
             "1. Encrypt text (ROT47/ROT13)",
             "3. Peak buffer",
+            "4. Write to JSON file",
             "5. Exit",
-            "---> "
+            "---> ",
         )
 
     def __encrypt_text(self) -> None:
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Pls write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
-        encrypted_text = self.__create_dict(rot, text, encoded_text)
+        encrypted_text = {rot.rot_type(): [text, encoded_text]}
         # TODO Klasa pomocnicza do dicta,Property class method na create. rot: str, text:str
         self.__buffer.add(encrypted_text)
-        # self.__create_dict(rot, text, encoded_text)
-
-    def __create_dict(self, rot, text: str, encrypted_text: str):
-        rot = rot.rot_type()
-        buffer = {}
-
-        if rot not in buffer.keys():
-            buffer = {rot: [text, encrypted_text]}
-        else:
-            buffer += {rot: [text, encrypted_text]}
-
-        return buffer
 
     def __get_encryptor(self) -> Rot:
         io.print_text(
@@ -77,3 +68,5 @@ class Manager:
         else:
             io.print_text("Invalid option")
             return self.__get_encryptor()
+
+        
