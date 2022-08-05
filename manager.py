@@ -13,7 +13,7 @@ class Manager:
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "3": self.__buffer.peak,
-            "4": self.__buffer_dict.show_buffer_dict,
+            "4": self.__write_to_file,
             "5": self.__end_application,
         }
 
@@ -69,4 +69,7 @@ class Manager:
             io.print_text("Invalid option")
             return self.__get_encryptor()
 
-        
+    def __write_to_file(self) -> None:
+        buffer = self.__buffer_dict.create_dict()
+        file_name = "Encrypted text.json"
+        fh.check(file_name, buffer)

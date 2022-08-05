@@ -1,4 +1,5 @@
 class Buffer:
+
     def __init__(self):
         self.__buffer = []
         self.__buffer_dict = {}
