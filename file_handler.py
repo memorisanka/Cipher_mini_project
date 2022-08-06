@@ -5,18 +5,20 @@ from typing import Any
 
 class FileHandler:
     @staticmethod
-    def check(file_name: str, data: object) -> Any:
-        if os.path.isdir((os.getcwd() + f"/{file_name}")):
-            FileHandler.write_json(file_name, data)
+    def check(file_name: str) -> Any:
+        try:
+            path = os.path.isdir((os.getcwd() + f"/{file_name}.json"))
+            if not path:
+                raise FileNotFoundError("File doesn't exist.")
+        except FileNotFoundError:
+            return "File doesn't exist."
         else:
-            with open(file_name, "w", encoding="UTF-8") as f:
-                f.write("")
-            FileHandler.write_json(file_name, data)
+            return True
 
     @staticmethod
     def write_json(file_name: str, data: object) -> None:
         with open(f"{file_name}.json", "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=6)
 
     @staticmethod
     def read_json(file_name: str) -> None:
@@ -24,5 +26,3 @@ class FileHandler:
             data = json.load(f)
 
         print(data)
-
-# FILEHANDLER files, czy istnieje

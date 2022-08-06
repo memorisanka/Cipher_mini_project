@@ -71,5 +71,6 @@ class Manager:
 
     def __write_to_file(self) -> None:
         buffer = self.__buffer_dict.create_dict()
-        file_name = "Encrypted text.json"
+        file_name = "Encrypted text"
         fh.check(file_name, buffer)
+        # io.print_text("Zapisano do pliku")
