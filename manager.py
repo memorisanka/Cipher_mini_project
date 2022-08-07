@@ -71,8 +71,10 @@ class Manager:
 
     def __write_to_file(self) -> None:
         self.__buffer_dict.create_dict()
-        self.__buffer_dict.show_buffer_dict()
-    #     file_name = "Encrypted text"
-    #     fh.check(file_name)
-    #     fh.write_json(file_name, buffer)
-    #     io.print_text("Saved to file.")
+        file_name = "Encrypted text"
+
+        if fh.check(file_name):
+            fh.write_json(file_name, self.__buffer_dict)
+            io.print_text("Saved to file.")
+        else:
+            io.print_text("File does not exist.")

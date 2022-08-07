@@ -6,11 +6,7 @@ from typing import Any
 class FileHandler:
     @staticmethod
     def check(file_name: str) -> Any:
-        if os.path.isdir((os.getcwd() + f"/{file_name}.json")):
-            return True
-        else:
-            print("File not exist.")
-            return False
+        return os.path.isdir((os.getcwd() + f"/{file_name}.json"))
 
         # try:
         #     path = os.path.isdir((os.getcwd() + f"/{file_name}.json"))
