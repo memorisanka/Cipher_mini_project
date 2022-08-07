@@ -70,7 +70,9 @@ class Manager:
             return self.__get_encryptor()
 
     def __write_to_file(self) -> None:
-        buffer = self.__buffer_dict.create_dict()
-        file_name = "Encrypted text"
-        fh.check(file_name, buffer)
-        # io.print_text("Zapisano do pliku")
+        self.__buffer_dict.create_dict()
+        self.__buffer_dict.show_buffer_dict()
+    #     file_name = "Encrypted text"
+    #     fh.check(file_name)
+    #     fh.write_json(file_name, buffer)
+    #     io.print_text("Saved to file.")

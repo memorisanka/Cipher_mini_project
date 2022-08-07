@@ -26,4 +26,3 @@ class Buffer:
 
     def show_buffer_dict(self):
         print(self.__buffer_dict)
-        return self.__buffer_dict

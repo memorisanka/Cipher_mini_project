@@ -6,14 +6,20 @@ from typing import Any
 class FileHandler:
     @staticmethod
     def check(file_name: str) -> Any:
-        try:
-            path = os.path.isdir((os.getcwd() + f"/{file_name}.json"))
-            if not path:
-                raise FileNotFoundError("File doesn't exist.")
-        except FileNotFoundError:
-            return "File doesn't exist."
-        else:
+        if os.path.isdir((os.getcwd() + f"/{file_name}.json")):
             return True
+        else:
+            print("File not exist.")
+            return False
+
+        # try:
+        #     path = os.path.isdir((os.getcwd() + f"/{file_name}.json"))
+        #     if not path:
+        #         raise FileNotFoundError("File doesn't exist.")
+        # except FileNotFoundError:
+        #     return "File doesn't exist."
+        # else:
+        #     return True
 
     @staticmethod
     def write_json(file_name: str, data: object) -> None:
