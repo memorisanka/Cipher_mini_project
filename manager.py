@@ -9,13 +9,13 @@ class Manager:
     def __init__(self) -> None:
         self.__is_running = True
         self.__buffer = Buffer()
-        self.__buffer_dict = Buffer()
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "3": self.__buffer.peak,
             "4": self.__write_to_file,
             "5": self.__end_application,
         }
+        self.folder = False
 
     def run(self):
         while self.__is_running:
@@ -70,11 +70,11 @@ class Manager:
             return self.__get_encryptor()
 
     def __write_to_file(self) -> None:
-        self.__buffer_dict.create_dict()
-        file_name = "Encrypted text"
+        if not self.folder:
+            fh.check()
+            self.folder = True
+        self.__buffer.create_dict()
+        file_name = input("File_name: ")
 
-        if fh.check(file_name):
-            fh.write_json(file_name, self.__buffer_dict)
-            io.print_text("Saved to file.")
-        else:
-            io.print_text("File does not exist.")
+        fh.write_json(file_name, self.__buffer.buffer_dict)
+        io.print_text("Saved to file.")
