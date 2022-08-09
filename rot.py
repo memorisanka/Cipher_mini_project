@@ -1,12 +1,15 @@
 from abc import ABC, abstractmethod
 
+
 class Rot(ABC):
     @abstractmethod
     def cipher(self, text: str):
         pass
-    # @abstractmethod
-    # def rot_type(self) -> str:
-    #     pass
+
+    @abstractmethod
+    def rot_type(self) -> str:
+        pass
+
 
 class Rot13(Rot):
     def cipher(self, text: str):
@@ -19,9 +22,11 @@ class Rot13(Rot):
             ]
         )
 
-
         print(f"Text after encryption: {encrypted_rot13}\n")
         return encrypted_rot13
+
+    def rot_type(self) -> str:
+        return "Rot 13"
 
 
 class Rot47(Rot):
@@ -36,6 +41,13 @@ class Rot47(Rot):
         print(f"Text after encryption: {encrypted_text_rot47}\n")
         return encrypted_text_rot47
 
+    def rot_type(self) -> str:
+        return "Rot 47"
+
+
 class Rot3(Rot):
     def cipher(self, text: str):
         pass
+
+    def rot_type(self) -> str:
+        return "Rot 3"

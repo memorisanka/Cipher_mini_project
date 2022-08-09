@@ -2,6 +2,7 @@ from typing import Union, Callable
 from input_output_handler import InputOutputHandler as io
 from rot import Rot13, Rot47, Rot
 from buffer import Buffer
+from file_handler import FileHandler as fh
 
 
 class Manager:
@@ -11,8 +12,10 @@ class Manager:
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "3": self.__buffer.peak,
+            "4": self.__write_to_file,
             "5": self.__end_application,
         }
+        self.folder = False
 
     def run(self):
         while self.__is_running:
@@ -33,19 +36,21 @@ class Manager:
     @staticmethod
     def __show_menu() -> None:
         io.print_text(
-            "What you want to do?",
-            "Pick the number",
+            "What do you want to do?",
+            "Pick the number:",
             "1. Encrypt text (ROT47/ROT13)",
             "3. Peak buffer",
-            "5. Exit"
+            "4. Write to JSON file",
+            "5. Exit",
+            "---> ",
         )
 
-    def __encrypt_text(self):
+    def __encrypt_text(self) -> None:
         rot: Rot = self.__get_encryptor()
-        text: str = io.read("Pls write down text to encrypt:")
+        text: str = io.read("Pls write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
-        encrypted_text = {"Rot13": encoded_text}
-        # TODO Klasa pomocnicza do dicta,Property class mehtod na create. rot: str, text:str
+        encrypted_text = {rot.rot_type(): [text, encoded_text]}
+        # TODO Klasa pomocnicza do dicta,Property class method na create. rot: str, text:str
         self.__buffer.add(encrypted_text)
 
     def __get_encryptor(self) -> Rot:
@@ -63,3 +68,13 @@ class Manager:
         else:
             io.print_text("Invalid option")
             return self.__get_encryptor()
+
+    def __write_to_file(self) -> None:
+        if not self.folder:
+            fh.check()
+            self.folder = True
+        self.__buffer.create_dict()
+        file_name = input("File_name: ")
+
+        fh.write_json(file_name, self.__buffer.buffer_dict)
+        io.print_text("Saved to file.")

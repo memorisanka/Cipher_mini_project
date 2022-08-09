@@ -1,3 +1,6 @@
-def test_should_return_true_if_function_encrypt_text_with_rot13():
+from manager import Manager
 
-    assert encrypt_rot13("Ala ma kota") == "Nyn zn xbgn"
+
+def test_should_return_true_if_function_encrypt_text_with_rot13():
+    pass
+
