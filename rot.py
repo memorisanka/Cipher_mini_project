@@ -10,6 +10,10 @@ class Rot(ABC):
     def rot_type(self) -> str:
         pass
 
+    @abstractmethod
+    def rot_buffer(self):
+        pass
+
 
 class Rot13(Rot):
     def cipher(self, text: str):
@@ -21,12 +25,13 @@ class Rot13(Rot):
                 for letter in text.lower()
             ]
         )
-
-        print(f"Text after encryption: {encrypted_rot13}\n")
         return encrypted_rot13
 
     def rot_type(self) -> str:
         return "Rot 13"
+
+    def rot_buffer(self):
+        return "buffer_rot13"
 
 
 class Rot47(Rot):
@@ -38,11 +43,13 @@ class Rot47(Rot):
                 encrypted_text_rot47 += chr(33 + (j + 14) % 94)
             else:
                 encrypted_text_rot47 += text[letter]
-        print(f"Text after encryption: {encrypted_text_rot47}\n")
         return encrypted_text_rot47
 
     def rot_type(self) -> str:
         return "Rot 47"
+
+    def rot_buffer(self):
+        return "buffer_rot47"
 
 
 class Rot3(Rot):
@@ -51,3 +58,6 @@ class Rot3(Rot):
 
     def rot_type(self) -> str:
         return "Rot 3"
+
+    def rot_buffer(self):
+        return "buffer_rot3"

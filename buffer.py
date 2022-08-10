@@ -3,6 +3,10 @@ class Buffer:
     def __init__(self):
         self.__buffer = []
         self.buffer_dict = {}
+        self.buffer_rot13 = []
+        self.buffer_rot47 = []
+        self.decrypted_rot13 = []
+        self.decrypted_rot47 = []
 
     def add(self, message: dict) -> None:
         self.__buffer.append(message)
@@ -20,11 +24,11 @@ class Buffer:
                 if key not in self.buffer_dict.keys():
                     self.buffer_dict[key] = []
                     self.buffer_dict[key] += [value]
-                    # self.buffer_dict.update(dct)
                 else:
                     self.buffer_dict[key] += [value]
 
-        # return self.__buffer_dict
+    def add_buffer_rot13(self, message: str):
+        self.buffer_rot13.append(message)
 
-    def show_buffer_dict(self):
-        print(self.buffer_dict)
+    def add_buffer_rot47(self, message: str):
+        self.buffer_rot47.append(message)

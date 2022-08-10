@@ -11,6 +11,7 @@ class Manager:
         self.__buffer = Buffer()
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
+            "2": self.__decrypt_text,
             "3": self.__buffer.peak,
             "4": self.__write_to_file,
             "5": self.__end_application,
@@ -39,6 +40,7 @@ class Manager:
             "What do you want to do?",
             "Pick the number:",
             "1. Encrypt text (ROT47/ROT13)",
+            "2. Decrypt all (ROT47/ROT13)",
             "3. Peak buffer",
             "4. Write to JSON file",
             "5. Exit",
@@ -50,12 +52,36 @@ class Manager:
         text: str = io.read("Pls write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
         encrypted_text = {rot.rot_type(): [text, encoded_text]}
-        # TODO Klasa pomocnicza do dicta,Property class method na create. rot: str, text:str
         self.__buffer.add(encrypted_text)
+
+        match rot.rot_type():
+            case "Rot 13":
+                self.__buffer.add_buffer_rot13(encoded_text)
+            case "Rot 47":
+                self.__buffer.add_buffer_rot47(encoded_text)
+
+    def __decrypt_text(self) -> Rot:
+        rot: Rot = self.__get_encryptor()
+
+        if rot.rot_type() == "Rot 13":
+            for txt in self.__buffer.buffer_rot13:
+                decrypted_text = rot.cipher(txt)
+                self.__buffer.decrypted_rot13.append(decrypted_text)
+            for i in self.__buffer.decrypted_rot13:
+                print(i)
+        elif rot.rot_type() == "Rot 47":
+            for txt in self.__buffer.buffer_rot47:
+                decrypted_text = rot.cipher(txt)
+                self.__buffer.decrypted_rot47.append(decrypted_text)
+            for i in self.__buffer.decrypted_rot47:
+                print(i)
+        else:
+            io.print_text("Invalid option")
+            return self.__get_encryptor()
 
     def __get_encryptor(self) -> Rot:
         io.print_text(
-            "Which encryptor do you want to use?",
+            "Which cipher do you want to use?",
             "Pick the number",
             "1: ROT47",
             "2: ROT13",
