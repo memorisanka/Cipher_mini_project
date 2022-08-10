@@ -72,8 +72,8 @@ class Manager:
         elif rot.rot_type() == "Rot 47":
             for txt in self.__buffer.buffer_rot47:
                 decrypted_text = rot.cipher(txt)
-                self.__buffer.decrypted_rot13.append(decrypted_text)
-            for i in self.__buffer.decrypted_rot13:
+                self.__buffer.decrypted_rot47.append(decrypted_text)
+            for i in self.__buffer.decrypted_rot47:
                 print(i)
         else:
             io.print_text("Invalid option")
