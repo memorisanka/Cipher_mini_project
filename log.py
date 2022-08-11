@@ -5,6 +5,10 @@ class User:
     def add(self, user: str, password: str) -> None:
         self.users_buffer.update({user: password})
 
-    def remove(self, user: str, password: str) -> None:
-        self.users_buffer.remove[user]
+    def remove(self, user: str) -> None:
+        self.users_buffer.pop(user, "User not found")
 
+    def check(self, user: str, password: str):
+        if self.users_buffer[user] == password:
+            return True
+        return False
