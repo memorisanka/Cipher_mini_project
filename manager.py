@@ -3,7 +3,7 @@ from input_output_handler import InputOutputHandler as io
 from rot import Rot13, Rot47, Rot
 from buffer import Buffer
 from file_handler import FileHandler as fh
-from log import User as usr
+from log import User
 
 
 class Manager:
@@ -18,9 +18,11 @@ class Manager:
             "5": self.__end_application,
         }
         self.folder = False
+        self.log_user = User()
 
     def log(self) -> None:
         io.print_text(
+            "Please choose option:",
             "1. Log in",
             "2. New user registration"
         )
@@ -28,7 +30,8 @@ class Manager:
         if choice == "1":
             user: str = io.read("User name: ")
             password: str = io.read("Password: ")
-            if usr.check(user, password):
+            if self.log_user.check(user, password):
+                io.print_text("Logged in!", "\n")
                 self.run()
             else:
                 io.print_text("Invalid username or password", "Try again")
@@ -36,9 +39,9 @@ class Manager:
         if choice == "2":
             user: str = io.read("User name: ")
             password: str = io.read("Password: ")
-            password_repeat = io.read("Repeat your password: ")
+            password_repeat: str = io.read("Repeat your password: ")
             if password == password_repeat:
-                usr.add(user, password)
+                self.log_user.add(user, password)
                 self.log()
             else:
                 io.print_text("Wrong password")
@@ -69,7 +72,7 @@ class Manager:
             "2. Decrypt all (ROT47/ROT13)",
             "3. Peak buffer",
             "4. Write to JSON file",
-            "5. Exit",
+            "5. Log out",
             "---> ",
         )
 
