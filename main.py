@@ -3,7 +3,7 @@ from manager import Manager
 
 def main():
     manager = Manager()
-    manager.run()
+    manager.log()
 
 
 if __name__ == "__main__":

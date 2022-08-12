@@ -19,7 +19,7 @@ class Manager:
         }
         self.folder = False
 
-    def __log(self) -> None:
+    def log(self) -> None:
         io.print_text(
             "1. Log in",
             "2. New user registration"
@@ -32,17 +32,17 @@ class Manager:
                 self.run()
             else:
                 io.print_text("Invalid username or password", "Try again")
-                self.__log()
+                self.log()
         if choice == "2":
             user: str = io.read("User name: ")
             password: str = io.read("Password: ")
             password_repeat = io.read("Repeat your password: ")
             if password == password_repeat:
                 usr.add(user, password)
+                self.log()
             else:
                 io.print_text("Wrong password")
                 self.__end_application()
-
 
     def run(self):
         while self.__is_running:
