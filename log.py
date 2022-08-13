@@ -11,5 +11,5 @@ class User:
     def check(self, usr: str, pw: str) -> bool:
         if self.users_buffer[usr] == pw:
             return True
-        else:
-            return False
+
+        return False

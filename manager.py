@@ -30,22 +30,22 @@ class Manager:
         if choice == "1":
             user: str = io.read("User name: ")
             password: str = io.read("Password: ")
-            if self.log_user.check(user, password):
-                io.print_text("Logged in!", "\n")
-                self.run()
-            else:
-                io.print_text("Invalid username or password", "Try again")
-                self.log()
+            # if self.log_user.check(user, password):
+            #     io.print_text("Logged in!", "\n")
+            #     self.run()
+            # else:
+            #     io.print_text("Invalid username or password", "Try again")  # nie zwraca komunikatu, jeśli False
+            #     self.log()
         if choice == "2":
             user: str = io.read("User name: ")
             password: str = io.read("Password: ")
             password_repeat: str = io.read("Repeat your password: ")
-            if password == password_repeat:
-                self.log_user.add(user, password)
-                self.log()
-            else:
-                io.print_text("Wrong password")
-                self.__end_application()
+            # if password == password_repeat:
+            #     self.log_user.add(user, password)
+            #     self.log()
+            # else:
+            #     io.print_text("Wrong password")
+            #     self.__end_application()
 
     def run(self):
         while self.__is_running:
