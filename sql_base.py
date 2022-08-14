@@ -7,22 +7,25 @@ class Base:
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
         cur.execute("DROP TABLE IF EXISTS Users")
-        cur.execute("CREATE TABLE Users (user_name TEXT, password TEXT")
+        cur.execute("CREATE TABLE Users (" 
+                    "user_ID INTEGER PRIMARY KEY AUTOINCREMENT, " 
+                    "user_name TEXT, "
+                    "password TEXT)")
         conn.close()
+
+    @staticmethod
+    def check_user(user_name, password):
+        conn = sqlite3.connect("users.sqlite")
+        cur = conn.cursor()
+        cur.execute(f'SELECT user_name, password FROM Users WHERE user_name = {user_name}')
+        if cur == (user_name, password):
+            return True
+        return False
 
     @staticmethod
     def add_user(user, password):
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute("INSERT INTO Users (user_name, password) VALUES (?, ?)", (user, password))
+        cur.execute("INSERT INTO Users (user_ID, user_name, password) VALUES (NULL, ?, ?)", (user, password))
         conn.commit()
         conn.close()
-
-    @staticmethod
-    def check_user(user, password):
-        conn = sqlite3.connect("users.sqlite")
-        cur = conn.cursor()
-        cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = {user}")
-        if cur == (user, password):
-            return True
-        return False

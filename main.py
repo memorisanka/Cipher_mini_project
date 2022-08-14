@@ -6,7 +6,7 @@ def main():
     base = Base()
     base.create_base()
     manager = Manager()
-    manager.run()
+    manager.log()
 
 
 if __name__ == "__main__":
