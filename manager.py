@@ -4,6 +4,7 @@ from rot import Rot13, Rot47, Rot
 from buffer import Buffer
 from file_handler import FileHandler as fh
 from log import User
+from sql_base import Base
 
 
 class Manager:
@@ -19,6 +20,7 @@ class Manager:
         }
         self.folder = False
         self.log_user = User()
+        self.base = Base()
 
     def log(self) -> None:
         io.print_text(
