@@ -2,8 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class Rot(ABC):
+
+    @staticmethod
     @abstractmethod
-    def cipher(self, text: str):
+    def cipher(text: str):
         pass
 
     @abstractmethod
@@ -35,7 +37,8 @@ class Rot13(Rot):
 
 
 class Rot47(Rot):
-    def cipher(self, text: str):
+    @staticmethod
+    def cipher(text: str):
         encrypted_text_rot47 = ""
         for letter in range(len(text)):
             j = ord(text[letter])

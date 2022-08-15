@@ -6,8 +6,7 @@ class Base:
     def create_base():
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute("DROP TABLE IF EXISTS Users")
-        cur.execute("CREATE TABLE Users (" 
+        cur.execute("CREATE TABLE IF NOT EXISTS Users (" 
                     "user_ID INTEGER PRIMARY KEY AUTOINCREMENT, " 
                     "user_name TEXT, "
                     "password TEXT)")
@@ -17,9 +16,10 @@ class Base:
     def check_user(user_name, password):
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name,))
+        cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name, ))
+        val = cur.fetchone()
         tup = (user_name, password)
-        if cur == tup:
+        if val == tup:
             return True
         return False
 
