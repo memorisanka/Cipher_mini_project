@@ -26,13 +26,15 @@ class Manager:
         io.print_text(
             "Please choose option:",
             "1. Log in",
-            "2. New user registration"
+            "2. New user registration",
+            "3. Exit"
         )
         choice = io.read("")
         if choice == "1":
             user_name: str = io.read("User name: ")
             password: str = io.read("Password: ")
-            if Base.check_user(user_name, password):
+            hash_password: str = Rot47.cipher(password)
+            if Base.check_user(user_name, hash_password):
                 io.print_text("Logged in!", "\n")
                 self.run()
             else:
@@ -44,17 +46,20 @@ class Manager:
             # else:
             #     io.print_text("Invalid username or password", "Try again")  # nie zwraca komunikatu, jeśli False
             #     self.log()
-        if choice == "2":
+        elif choice == "2":
             user_name: str = io.read("User name: ")
             password: str = io.read("Password: ")
             password_repeat: str = io.read("Repeat your password: ")
             if password == password_repeat:
-                Base.add_user(user_name, password)
+                hash_password: str = Rot47.cipher(password)
+                Base.add_user(user_name, hash_password)
             #     self.log_user.add(user, password)
                 self.log()
             else:
                 io.print_text("Wrong password")
                 self.__end_application()
+        elif choice == "3":
+            self.__end_application()
 
     def run(self):
         while self.__is_running:

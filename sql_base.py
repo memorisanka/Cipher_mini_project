@@ -17,8 +17,9 @@ class Base:
     def check_user(user_name, password):
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute(f'SELECT user_name, password FROM Users WHERE user_name = {user_name}')
-        if cur == (user_name, password):
+        cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name,))
+        tup = (user_name, password)
+        if cur == tup:
             return True
         return False
 
