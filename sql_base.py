@@ -13,7 +13,7 @@ class DataBase:
         conn.close()
 
     @staticmethod
-    def check_user(user_name, password):
+    def check_user(user_name: str, password: str) -> bool:
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
         cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name, ))
@@ -24,9 +24,19 @@ class DataBase:
         return False
 
     @staticmethod
-    def add_user(user, password):
+    def add_user(user: str, password: str) -> None:
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
         cur.execute("INSERT INTO Users (user_ID, user_name, password) VALUES (NULL, ?, ?)", (user, password))
         conn.commit()
         conn.close()
+
+    @staticmethod
+    def check_username(user_name: str):
+        conn = sqlite3.connect("users.sqlite")
+        cur = conn.cursor()
+        cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
+        val = cur.fetchone()
+        if val == user_name:
+            return True
+        return False
