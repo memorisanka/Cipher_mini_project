@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class Base:
+class DataBase:
     @staticmethod
     def create_base():
         conn = sqlite3.connect("users.sqlite")

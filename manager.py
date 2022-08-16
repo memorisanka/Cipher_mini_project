@@ -3,8 +3,8 @@ from input_output_handler import InputOutputHandler as io
 from rot import Rot13, Rot47, Rot
 from buffer import Buffer
 from file_handler import FileHandler as fh
-from log import User
-from sql_base import Base
+from sql_base import DataBase
+from log import UserLog
 
 
 class Manager:
@@ -19,12 +19,12 @@ class Manager:
             "5": self.__end_application,
         }
         self.folder = False
-        self.log_user = User()
-        self.base = Base()
+        self.base = DataBase()
+        self.user_log = UserLog()
         self.__log_options: dict[str, Callable] = {
-            "1": self.log,
-            "2": self.new_user,
-            "3": self.__end_application(),
+            "1": self.user_log.log,
+            "2": self.user_log.new_user,
+            "3": exit,
         }
 
     def log(self) -> None:
@@ -34,47 +34,17 @@ class Manager:
             "2. New user registration",
             "3. Exit"
         )
-        choice = io.read("")
-        if choice == "1":
-            user_name: str = io.read("User name: ")
-            password: str = io.read("Password: ")
-            hash_password: str = Rot47.cipher(password)
-            if Base.check_user(user_name, hash_password):
-                io.print_text("Logged in!", "\n")
-                self.run()
-            else:
-                io.print_text("Invalid username or password", "Try again")  # nie zwraca komunikatu, jeśli False
-                self.log()
-            # if self.log_user.check(user, password):
-            #     io.print_text("Logged in!", "\n")
-            #     self.run()
-            # else:
-            #     io.print_text("Invalid username or password", "Try again")  # nie zwraca komunikatu, jeśli False
-            #     self.log()
-        elif choice == "2":
-            user_name: str = io.read("User name: ")
-            password: str = io.read("Password: ")
-            password_repeat: str = io.read("Repeat your password: ")
-            if password == password_repeat:
-                hash_password: str = Rot47.cipher(password)
-                Base.add_user(user_name, hash_password)
-            #     self.log_user.add(user, password)
-                self.log()
-            else:
-                io.print_text("Wrong password")
-                self.__end_application()
-        elif choice == "3":
-            self.__end_application()
+        log_instruction = io.read("")
+        self.__handle_log_instruction(log_instruction)
+        io.print_text("\n")
 
-    def new_user(self):
-        pass
-    
     def run(self):
-        while self.__is_running:
-            self.__show_menu()
-            user_instruction = io.read("")
-            self.__handle_instruction(user_instruction)
-            io.print_text("\n")
+        while not self.log():
+            while self.__is_running:
+                self.__show_menu()
+                user_instruction = io.read("")
+                self.__handle_instruction(user_instruction)
+                io.print_text("\n")
 
     def __handle_log_instruction(self, user_text: Union[int, str]):
         if user_text in self.__log_options:
