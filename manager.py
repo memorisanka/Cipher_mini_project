@@ -21,6 +21,11 @@ class Manager:
         self.folder = False
         self.log_user = User()
         self.base = Base()
+        self.__log_options: dict[str, Callable] = {
+            "1": self.log,
+            "2": self.new_user,
+            "3": self.__end_application(),
+        }
 
     def log(self) -> None:
         io.print_text(
@@ -61,6 +66,9 @@ class Manager:
         elif choice == "3":
             self.__end_application()
 
+    def new_user(self):
+        pass
+    
     def run(self):
         while self.__is_running:
             self.__show_menu()
@@ -68,11 +76,17 @@ class Manager:
             self.__handle_instruction(user_instruction)
             io.print_text("\n")
 
+    def __handle_log_instruction(self, user_text: Union[int, str]):
+        if user_text in self.__log_options:
+            self.__log_options.get(user_text)()
+        else:
+            io.print_text(f"{user_text} is not an instruction")
+
     def __handle_instruction(self, user_text: Union[int, str]):
         if user_text in self.__options:
             self.__options.get(user_text)()
         else:
-            io.print_text(f"{user_text} is not a instruction")
+            io.print_text(f"{user_text} is not an instruction")
 
     def __end_application(self):
         self.__is_running = False
