@@ -31,7 +31,7 @@ class Manager:
         io.print_text(
             "Please choose option:",
             "1. Log in",
-            "2. New user registration",
+            "2. New user",
             "3. Exit"
         )
         log_instruction = io.read("")
@@ -39,12 +39,11 @@ class Manager:
         io.print_text("\n")
 
     def run(self):
-        while not self.log():
-            while self.__is_running:
-                self.__show_menu()
-                user_instruction = io.read("")
-                self.__handle_instruction(user_instruction)
-                io.print_text("\n")
+        while self.__is_running:
+            self.__show_menu()
+            user_instruction = io.read("")
+            self.__handle_instruction(user_instruction)
+            io.print_text("\n")
 
     def __handle_log_instruction(self, user_text: Union[int, str]):
         if user_text in self.__log_options:

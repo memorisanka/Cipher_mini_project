@@ -32,11 +32,12 @@ class DataBase:
         conn.close()
 
     @staticmethod
-    def check_username(user_name: str):
+    def check_username(user_name: str) -> bool:
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
         cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
         val = cur.fetchone()
-        if val == user_name:
-            return True
-        return False
+        print(val)
+        if val != user_name:
+            return False
+        return True
