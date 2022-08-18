@@ -8,6 +8,8 @@ class UserLog:
         self.counter = 0
 
     def log_manager(self) -> None:
+        """Panel logowania do programu. W zależności od wybranej opcji zwraca odpowiednią funkcję."""
+
         io.print_text(
             "Welcome to Cipher!",
             "--------------------",
@@ -16,7 +18,7 @@ class UserLog:
             "2: New user",
             "3: Exit",
         )
-        encryptor_no = io.read("")
+        encryptor_no: str = io.read("")
         if encryptor_no == "1":
             return self.log()
         elif encryptor_no == "2":
@@ -28,6 +30,11 @@ class UserLog:
             return self.log_manager()
 
     def log(self) -> None:
+        """Logowanie istniejącego w bazie użytkownika.
+        Funkcja pobiera od użytkownika login oraz hasło, szyfruje hasło i sprawdza, czy dane zgadzają się
+        z danymi w bazie danych. Gdy podane zostaną błędne dane użytkownik ma 3 próby na podanie właściwych, inaczej
+        program kończy działanie."""
+
         io.print_text("Please, log in", "---------------------")
         user_name: str = io.read("User name: ")
         password: str = io.read("Password: ")
@@ -44,6 +51,9 @@ class UserLog:
                 exit()
 
     def new_user(self) -> None:
+        """Funkcja dodaje nowego użytkownika do bazdy danych."""
+        # TODO sprawdzanie, czy użytkownik istnieje w bazie danych
+
         io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")
         password: str = io.read("Password: ")
