@@ -38,6 +38,7 @@ class DataBase:
         cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
         val = cur.fetchone()
         print(val)
-        if val != user_name:
-            return False
-        return True
+        if val == user_name or val is None:
+            cur.close()
+            return True
+        return False
