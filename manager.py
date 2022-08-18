@@ -23,6 +23,7 @@ class Manager:
         self.log_user = UserLog()
 
     def run(self):
+        self.log_user.log_manager()
         while self.__is_running:
             self.__show_menu()
             user_instruction = io.read("")

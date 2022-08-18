@@ -6,16 +6,15 @@ from input_output_handler import InputOutputHandler as io
 class UserLog:
     def __init__(self):
         self.counter = 0
-        self.is_logging = True
 
-    def log_manager(self):
+    def log_manager(self) -> None:
         io.print_text(
             "Welcome to Cipher!",
-            "--------------------"
+            "--------------------",
             "Choose an option:",
             "1: Log in",
             "2: New user",
-            "3: Exit"
+            "3: Exit",
         )
         encryptor_no = io.read("")
         if encryptor_no == "1":
@@ -28,13 +27,13 @@ class UserLog:
             io.print_text("Invalid option")
             return self.log_manager()
 
-    def log(self):
+    def log(self) -> None:
+        io.print_text("Please, log in", "---------------------")
         user_name: str = io.read("User name: ")
         password: str = io.read("Password: ")
         hash_password: str = Rot47.cipher(password)
         if DataBase.check_user(user_name, hash_password):
             io.print_text("Logged in!", "\n")
-            self.is_logging = False
         elif not DataBase.check_user(user_name, password):
             while self.counter < 3:
                 io.print_text("Invalid username or password", "Try again", f"Trials left: {3 - self.counter}")
@@ -45,18 +44,18 @@ class UserLog:
                 exit()
 
     def new_user(self) -> None:
+        io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")
-        if not DataBase.check_username(user_name):
-            password: str = io.read("Password: ")
-            password_repeat: str = io.read("Repeat your password: ")
-            if password == password_repeat:
-                hash_password: str = Rot47.cipher(password)
-                DataBase.add_user(user_name, hash_password)
-                io.print_text("Created new user. Please log in.", "\n")
-                self.log()
-            else:
-                io.print_text("Incorrect password")
-                self.new_user()
+        password: str = io.read("Password: ")
+        password_repeat: str = io.read("Repeat your password: ")
+        if password == password_repeat:
+            hash_password: str = Rot47.cipher(password)
+            DataBase.add_user(user_name, hash_password)
+            io.print_text("Created new user. Please log in.", "\n")
+            self.log()
         else:
-            io.print_text("Choose other user name.")
+            io.print_text("Incorrect password")
             self.new_user()
+        # else:
+        #     io.print_text("Choose other user name.")
+        #     self.new_user()
