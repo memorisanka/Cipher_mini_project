@@ -21,20 +21,6 @@ class Manager:
         self.folder = False
         self.base = DataBase()
         self.log_user = UserLog()
-        self.__log_options: dict[str, Callable] = {
-            "1": self.log_user.log,
-            "2": self.log_user.new_user,
-            "3": exit,
-        }
-
-    def log_manager(self) -> None:
-        if self.log_user.is_logging:
-            self.__show_log_menu()
-            log_instruction = io.read("")
-            self.__handle_log_instruction(log_instruction)
-            io.print_text("\n")
-        else:
-            self.run()
 
     def run(self):
         while self.__is_running:
@@ -42,12 +28,6 @@ class Manager:
             user_instruction = io.read("")
             self.__handle_instruction(user_instruction)
             io.print_text("\n")
-
-    def __handle_log_instruction(self, user_text: Union[int, str]):
-        if user_text in self.__log_options:
-            self.__log_options.get(user_text)()
-        else:
-            io.print_text(f"{user_text} is not an instruction")
 
     def __handle_instruction(self, user_text: Union[int, str]):
         if user_text in self.__options:
@@ -69,15 +49,6 @@ class Manager:
             "4. Write to JSON file",
             "5. Log out",
             "---> ",
-        )
-
-    @staticmethod
-    def __show_log_menu() -> None:
-        io.print_text(
-            "Please choose option:",
-            "1. Log in",
-            "2. New user",
-            "3. Exit"
         )
 
     def __encrypt_text(self) -> None:

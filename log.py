@@ -8,6 +8,26 @@ class UserLog:
         self.counter = 0
         self.is_logging = True
 
+    def log_manager(self):
+        io.print_text(
+            "Welcome to Cipher!",
+            "--------------------"
+            "Choose an option:",
+            "1: Log in",
+            "2: New user",
+            "3: Exit"
+        )
+        encryptor_no = io.read("")
+        if encryptor_no == "1":
+            return self.log()
+        elif encryptor_no == "2":
+            return self.new_user()
+        elif encryptor_no == "3":
+            exit()
+        else:
+            io.print_text("Invalid option")
+            return self.log_manager()
+
     def log(self):
         user_name: str = io.read("User name: ")
         password: str = io.read("Password: ")

@@ -36,7 +36,7 @@ class DataBase:
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
         cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
-        val = cur.fetchone()
+        val = cur.fetchone()[0]
         print(val)
         if val == user_name or val is None:
             cur.close()
