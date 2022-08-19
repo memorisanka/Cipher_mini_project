@@ -3,10 +3,10 @@ class Buffer:
     def __init__(self):
         self.__buffer = []
         self.buffer_dict = {}
-        self.buffer_rot13 = []
-        self.buffer_rot47 = []
-        self.decrypted_rot13 = []
-        self.decrypted_rot47 = []
+        # self.buffer_rot13 = []
+        # self.buffer_rot47 = []
+        # self.decrypted_rot13 = []
+        # self.decrypted_rot47 = []
 
     def add(self, message: dict) -> None:
         """Dodawanie rekordów do buffera."""
@@ -34,8 +34,8 @@ class Buffer:
                 else:
                     self.buffer_dict[key] += [value]
 
-    def add_buffer_rot13(self, message: str):
-        self.buffer_rot13.append(message)
-
-    def add_buffer_rot47(self, message: str):
-        self.buffer_rot47.append(message)
+    # def add_buffer_rot13(self, message: str):
+    #     self.buffer_rot13.append(message)
+    #
+    # def add_buffer_rot47(self, message: str):
+    #     self.buffer_rot47.append(message)

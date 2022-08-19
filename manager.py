@@ -65,35 +65,49 @@ class Manager:
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Please write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
-        encrypted_text = {rot.rot_type(): [text, encoded_text]}
+        encrypted_text = {rot.rot_type(): [encoded_text]}
         self.__buffer.add(encrypted_text)
 
-        match rot.rot_type():
-            case "Rot 13":
-                self.__buffer.add_buffer_rot13(encoded_text)
-            case "Rot 47":
-                self.__buffer.add_buffer_rot47(encoded_text)
+        # match rot.rot_type():
+        #     case "Rot 13":
+        #         self.__buffer.add_buffer_rot13(encoded_text)
+        #     case "Rot 47":
+        #         self.__buffer.add_buffer_rot47(encoded_text)
 
-    def __decrypt_text(self) -> Rot:
+    def __decrypt_text(self) -> None:
         """Funkcja deszyfruje słowa o podanym przez użytkownika indeksie."""
 
+        self.__buffer.create_dict()
         rot: Rot = self.__get_encryptor()
+        index_of_word: int = int(io.read(
+            f"Choose word index do decrypt [1 - {len(self.__buffer.buffer_dict[rot.rot_type()])}]: ")
+        )
+        # TODO odczyt z json i odszyfrowanie podanego słowa
 
-        if rot.rot_type() == "Rot 13":
-            for txt in self.__buffer.buffer_rot13:
-                decrypted_text = rot.cipher(txt)
-                self.__buffer.decrypted_rot13.append(decrypted_text)
-            for i in self.__buffer.decrypted_rot13:
-                print(i)
-        elif rot.rot_type() == "Rot 47":
-            for txt in self.__buffer.buffer_rot47:
-                decrypted_text = rot.cipher(txt)
-                self.__buffer.decrypted_rot47.append(decrypted_text)
-            for i in self.__buffer.decrypted_rot47:
-                print(i)
+        if self.__buffer.buffer_dict:
+            if index_of_word <= len(self.__buffer.buffer_dict[rot.rot_type()]) - 1:
+                decrypted_text = rot.cipher(self.__buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
+                io.print_text("Decrypted word: ", f"{decrypted_text}")
+            else:
+                io.print_text("Index of word is out of range.")
         else:
-            io.print_text("Invalid option")
-            return self.__get_encryptor()
+            io.print_text("There are no words to decrypt.")
+
+        # if rot.rot_type() == "Rot 13":
+        #     for txt in self.__buffer.buffer_rot13:
+        #         decrypted_text = rot.cipher(txt)
+        #         self.__buffer.decrypted_rot13.append(decrypted_text)
+        #     for i in self.__buffer.decrypted_rot13:
+        #         print(i)
+        # elif rot.rot_type() == "Rot 47":
+        #     for txt in self.__buffer.buffer_rot47:
+        #         decrypted_text = rot.cipher(txt)
+        #         self.__buffer.decrypted_rot47.append(decrypted_text)
+        #     for i in self.__buffer.decrypted_rot47:
+        #         print(i)
+        # else:
+        #     io.print_text("Invalid option")
+        #     return self.__get_encryptor()
 
     def __get_encryptor(self) -> Rot:
         """Funkcja pozwala na wybór rota, którego chce użyć użytkownik."""
@@ -114,7 +128,7 @@ class Manager:
             return self.__get_encryptor()
 
     def __write_to_file(self) -> None:
-        """Funkcja pozwala użytkownikowi na zapis wyników do pliku json. Nazwe pliku określa użytkownik."""
+        """Funkcja pozwala użytkownikowi na zapis wyników do pliku json. Nazwę pliku określa użytkownik."""
 
         if not self.folder:
             fh.check()

@@ -52,7 +52,7 @@ class UserLog:
 
     def new_user(self) -> None:
         """Funkcja dodaje nowego użytkownika do bazdy danych."""
-        # TODO sprawdzanie, czy użytkownik istnieje w bazie danych
+        # TODO: sprawdzanie, czy użytkownik istnieje w bazie danych
 
         io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")
