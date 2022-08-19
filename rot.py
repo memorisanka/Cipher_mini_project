@@ -18,7 +18,8 @@ class Rot(ABC):
 
 
 class Rot13(Rot):
-    def cipher(self, text: str):
+    @staticmethod
+    def cipher(text: str):
         encrypted_rot13 = "".join(
             [
                 chr((ord(letter) - 97 + 13) % 26 + 97)
