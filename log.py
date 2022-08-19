@@ -32,7 +32,7 @@ class UserLog:
     def log(self) -> None:
         """Logowanie istniejącego w bazie użytkownika.
         Funkcja pobiera od użytkownika login oraz hasło, szyfruje hasło i sprawdza, czy dane zgadzają się
-        z danymi w bazie danych. Gdy podane zostaną błędne dane użytkownik ma 3 próby na podanie właściwych, inaczej
+        z danymi w bazie danych. Gdy podane zostaną błędne dane, użytkownik ma 3 próby na podanie właściwych, inaczej
         program kończy działanie."""
 
         io.print_text("Please, log in", "---------------------")
@@ -42,7 +42,7 @@ class UserLog:
         if DataBase.check_user(user_name, hash_password):
             io.print_text("Logged in!", "\n")
         elif not DataBase.check_user(user_name, password):
-            while self.counter < 3:
+            if self.counter < 3:
                 io.print_text("Invalid username or password", "Try again", f"Trials left: {3 - self.counter}")
                 self.counter += 1
                 self.log()

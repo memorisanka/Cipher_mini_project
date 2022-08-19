@@ -84,12 +84,12 @@ class Manager:
         )
         # TODO odczyt z json i odszyfrowanie podanego słowa
 
-        if self.__buffer.buffer_dict:
-            if index_of_word <= len(self.__buffer.buffer_dict[rot.rot_type()]) - 1:
+        if len(self.__buffer.buffer_dict[rot.rot_type()]) > 0:
+            if index_of_word <= (len(self.__buffer.buffer_dict[rot.rot_type()]) - 1):
                 decrypted_text = rot.cipher(self.__buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
                 io.print_text("Decrypted word: ", f"{decrypted_text}")
             else:
-                io.print_text("Index of word is out of range.")
+                io.print_text("Index is out of range.")
         else:
             io.print_text("There are no words to decrypt.")
 
