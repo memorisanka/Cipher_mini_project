@@ -13,7 +13,7 @@ class TestsCipher():
         text = "Ala ma kota"
         value = "Nyn zn xbgn"
 
-        assert Rot13.cipher(text) == value.lower() #  rot13 do poprawy
+        assert Rot13.cipher(text) == value
 
     def test_should_return_true_if_function_encrypt_text_with_rot47(self):
         text = "test"
