@@ -24,24 +24,24 @@ class Rot(ABC):
 
 class Rot13(Rot):
     @staticmethod
-    def shift(c, n, alf):
-        if c in alf:
-            oldIdx = alf.index(c)
-            newIdx = (oldIdx + n) % len(alf)
-            return alf[newIdx]
+    def shift(char: str, n: int, alf: str) -> str:
+        if char in alf:
+            old_idx: int = alf.index(char)
+            new_idx: int = (old_idx + n) % len(alf)
+            return alf[new_idx]
 
     @staticmethod
-    def cipher(text: str, n=13, alf=string.ascii_lowercase):
-        alf_lower = alf.lower()
-        alf_upper = alf.upper()
-        result = ""
-        for c in text:
-            if c in alf_lower:
-                result += Rot13.shift(c, n, alf_lower)
-            elif c in alf_upper:
-                result += Rot13.shift(c, n, alf_upper)
+    def cipher(text: str, n=13, alf=string.ascii_lowercase) -> str:
+        alf_lower: str = alf.lower()
+        alf_upper: str = alf.upper()
+        result: str = ""
+        for char in text:
+            if char in alf_lower:
+                result += Rot13.shift(char, n, alf_lower)
+            elif char in alf_upper:
+                result += Rot13.shift(char, n, alf_upper)
             else:
-                result += c
+                result += char
         return result
 
     def rot_type(self) -> str:
@@ -53,8 +53,8 @@ class Rot13(Rot):
 
 class Rot47(Rot):
     @staticmethod
-    def cipher(text: str):
-        encrypted_text_rot47 = ""
+    def cipher(text: str) -> str:
+        encrypted_text_rot47: str = ""
         for letter in range(len(text)):
             j = ord(text[letter])
             if 33 <= j <= 126:
@@ -75,8 +75,19 @@ class Rot47(Rot):
 
 
 class Rot3(Rot):
-    def cipher(self, text: str):
-        pass
+    @staticmethod
+    def cipher(text: str, n=3, alf=string.ascii_lowercase) -> str:
+        alf_lower: str = alf.lower()
+        alf_upper: str = alf.upper()
+        result: str = ""
+        for char in text:
+            if char in alf_lower:
+                result += Rot3.shift(char, n, alf_lower)
+            elif char in alf_upper:
+                result += Rot3.shift(char, n, alf_upper)
+            else:
+                result += char
+        return result
 
     def rot_type(self) -> str:
         return "Rot 3"
@@ -85,5 +96,8 @@ class Rot3(Rot):
         return "buffer_rot3"
 
     @staticmethod
-    def shift(c, n, alf):
-        pass
+    def shift(char: str, n: int, alf: str) -> str:
+        if char in alf:
+            old_idx: int = alf.index(char)
+            new_idx: int = (old_idx + n) % len(alf)
+            return alf[new_idx]
