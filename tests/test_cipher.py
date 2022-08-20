@@ -13,6 +13,11 @@ class TestsCipher:
 
         assert Rot3.cipher(text) == value
 
+        text = "Nauka to lubię!"
+        value = "Qdxnd wr oxelę!"
+
+        assert Rot3.cipher(text) == value
+
     def test_should_return_true_if_function_encrypt_text_with_rot13(self):
         text = "test"
         value = "grfg"
@@ -24,6 +29,13 @@ class TestsCipher:
 
         assert Rot13.cipher(text) == value
 
+        assert Rot13.cipher(text) == value
+
+        text = "Nauka to lubię!"
+        value = "Anhxn gb yhovę!"
+
+        assert Rot13.cipher(text) == value
+
     def test_should_return_true_if_function_encrypt_text_with_rot47(self):
         text = "test"
         value = "E6DE"
@@ -32,6 +44,11 @@ class TestsCipher:
 
         text = "Ala ma kota"
         value = "p=2 >2 <@E2"
+
+        assert Rot47.cipher(text) == value
+
+        text = "Nauka to lubię!"
+        value = "}2F<2 E@ =F3:ęP"
 
         assert Rot47.cipher(text) == value
 

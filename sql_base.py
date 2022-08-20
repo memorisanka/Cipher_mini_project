@@ -8,19 +8,23 @@ class DataBase:
 
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute("CREATE TABLE IF NOT EXISTS Users (" 
-                    "user_ID INTEGER PRIMARY KEY AUTOINCREMENT, " 
-                    "user_name TEXT, "
-                    "password TEXT)")
+        cur.execute(
+            "CREATE TABLE IF NOT EXISTS Users ("
+            "user_ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "user_name TEXT, "
+            "password TEXT)"
+        )
         conn.close()
 
     @staticmethod
     def check_user(user_name: str, password: str) -> bool:
-        """ Funkcja sprawdza, czy w bazie danych są dane użytkownika: login oraz hasło."""
+        """Funkcja sprawdza, czy w bazie danych są dane użytkownika: login oraz hasło."""
 
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute(f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name, ))
+        cur.execute(
+            f"SELECT user_name, password FROM Users WHERE user_name = ?", (user_name,)
+        )
         val = cur.fetchone()
         tup = (user_name, password)
         if val == tup:
@@ -33,7 +37,10 @@ class DataBase:
 
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
-        cur.execute("INSERT INTO Users (user_ID, user_name, password) VALUES (NULL, ?, ?)", (user, password))
+        cur.execute(
+            "INSERT INTO Users (user_ID, user_name, password) VALUES (NULL, ?, ?)",
+            (user, password),
+        )
         conn.commit()
         conn.close()
 
