@@ -3,6 +3,9 @@ import string
 
 
 class Rot(ABC):
+    def __init__(self):
+        self.user_shift = 0
+
     @staticmethod
     @abstractmethod
     def cipher(text: str):
@@ -98,21 +101,19 @@ class RotAny(Rot):
             new_idx: int = (old_idx + n) % len(alf)
             return alf[new_idx]
 
-    @staticmethod
-    def cipher(text: str, alf=string.ascii_lowercase) -> str:
-        n = int(input("Enter shift (1-25): "))
+    def cipher(self, text: str, alf=string.ascii_lowercase) -> str:
+        self.user_shift = int(input("Enter shift (1-25): "))
         alf_lower: str = alf.lower()
         alf_upper: str = alf.upper()
         result: str = ""
         for char in text:
             if char in alf_lower:
-                result += RotAny.shift(char, n, alf_lower)
+                result += RotAny.shift(char, self.user_shift, alf_lower)
             elif char in alf_upper:
-                result += RotAny.shift(char, n, alf_upper)
+                result += RotAny.shift(char, self.user_shift, alf_upper)
             else:
                 result += char
         return result
 
     def rot_type(self) -> str:
-        return "Rot Any"
-
+        return f"Rot {self.user_shift}"

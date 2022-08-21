@@ -1,6 +1,6 @@
 from typing import Union, Callable
 from input_output_handler import InputOutputHandler as io
-from rot import Rot13, Rot47, Rot, Rot3
+from rot import Rot13, Rot47, Rot, Rot3, RotAny
 from buffer import Buffer
 from file_handler import FileHandler as fh
 from sql_base import DataBase
@@ -41,7 +41,7 @@ class Manager:
         else:
             io.print_text(f"{user_text} is not an instruction")
 
-    def __end_application(self):
+    def __end_application(self) -> None:
         self.__is_running = False
 
     @staticmethod
@@ -51,8 +51,8 @@ class Manager:
         io.print_text(
             "What do you want to do?",
             "Pick the number:",
-            "1. Encrypt text (ROT47/ROT13/ROT3)",
-            "2. Decrypt all (ROT47/ROT13/ROT3)",
+            "1. Encrypt text (ROT47/ROT13/ROT3/ROT1-25)",
+            "2. Decrypt (ROT47/ROT13/ROT3)",
             "3. Peak buffer",
             "4. Write to JSON file",
             "5. Log out",
@@ -118,6 +118,7 @@ class Manager:
             "1: ROT47",
             "2: ROT13",
             "3: ROT3",
+            "4: Any shift"
         )
         encryptor_no = io.read("")
         if encryptor_no == "1":
@@ -126,6 +127,8 @@ class Manager:
             return Rot13()
         elif encryptor_no == "3":
             return Rot3()
+        elif encryptor_no == "4":
+            return RotAny()
         else:
             io.print_text("Invalid option")
             return self.__get_encryptor()

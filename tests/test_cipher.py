@@ -52,6 +52,23 @@ class TestsCipher:
 
         assert Rot47.cipher(text) == result
 
+    def test_should_return_true_if_function_encrypt_text_with_rotAny(self):
+        text = "test"
+        result = "whvw"
+
+        assert Rot3.cipher(text) == result
+
+        text = "Ala ma kota"
+        result = "Dod pd nrwd"
+
+        assert Rot3.cipher(text) == result
+
+        text = "Nauka to lubię!"
+        result = "Qdxnd wr oxelę!"
+
+        assert Rot3.cipher(text) == result
+
+
 
 def main():
     tests_cipher = TestsCipher()
