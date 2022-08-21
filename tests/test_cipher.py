@@ -4,53 +4,53 @@ from rot import Rot47, Rot13, Rot3
 class TestsCipher:
     def test_should_return_true_if_function_encrypt_text_with_rot3(self):
         text = "test"
-        value = "whvw"
+        result = "whvw"
 
-        assert Rot3.cipher(text) == value
+        assert Rot3.cipher(text) == result
 
         text = "Ala ma kota"
-        value = "Dod pd nrwd"
+        result = "Dod pd nrwd"
 
-        assert Rot3.cipher(text) == value
+        assert Rot3.cipher(text) == result
 
         text = "Nauka to lubię!"
-        value = "Qdxnd wr oxelę!"
+        result = "Qdxnd wr oxelę!"
 
-        assert Rot3.cipher(text) == value
+        assert Rot3.cipher(text) == result
 
     def test_should_return_true_if_function_encrypt_text_with_rot13(self):
         text = "test"
-        value = "grfg"
+        result = "grfg"
 
-        assert Rot13.cipher(text) == value
+        assert Rot13.cipher(text) == result
 
         text = "Ala ma kota"
-        value = "Nyn zn xbgn"
+        result = "Nyn zn xbgn"
 
-        assert Rot13.cipher(text) == value
+        assert Rot13.cipher(text) == result
 
-        assert Rot13.cipher(text) == value
+        assert Rot13.cipher(text) == result
 
         text = "Nauka to lubię!"
-        value = "Anhxn gb yhovę!"
+        result = "Anhxn gb yhovę!"
 
-        assert Rot13.cipher(text) == value
+        assert Rot13.cipher(text) == result
 
     def test_should_return_true_if_function_encrypt_text_with_rot47(self):
         text = "test"
-        value = "E6DE"
+        result = "E6DE"
 
-        assert Rot47.cipher(text) == value
+        assert Rot47.cipher(text) == result
 
         text = "Ala ma kota"
-        value = "p=2 >2 <@E2"
+        result = "p=2 >2 <@E2"
 
-        assert Rot47.cipher(text) == value
+        assert Rot47.cipher(text) == result
 
         text = "Nauka to lubię!"
-        value = "}2F<2 E@ =F3:ęP"
+        result = "}2F<2 E@ =F3:ęP"
 
-        assert Rot47.cipher(text) == value
+        assert Rot47.cipher(text) == result
 
 
 def main():

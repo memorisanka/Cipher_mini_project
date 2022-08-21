@@ -12,10 +12,6 @@ class Rot(ABC):
     def rot_type(self) -> str:
         pass
 
-    @abstractmethod
-    def rot_buffer(self):
-        pass
-
     @staticmethod
     @abstractmethod
     def shift(c, n, alf):
@@ -47,9 +43,6 @@ class Rot13(Rot):
     def rot_type(self) -> str:
         return "Rot 13"
 
-    def rot_buffer(self):
-        return "buffer_rot13"
-
 
 class Rot47(Rot):
     @staticmethod
@@ -65,9 +58,6 @@ class Rot47(Rot):
 
     def rot_type(self) -> str:
         return "Rot 47"
-
-    def rot_buffer(self):
-        return "buffer_rot47"
 
     @staticmethod
     def shift(c, n, alf):
@@ -92,12 +82,37 @@ class Rot3(Rot):
     def rot_type(self) -> str:
         return "Rot 3"
 
-    def rot_buffer(self):
-        return "buffer_rot3"
-
     @staticmethod
     def shift(char: str, n: int, alf: str) -> str:
         if char in alf:
             old_idx: int = alf.index(char)
             new_idx: int = (old_idx + n) % len(alf)
             return alf[new_idx]
+
+
+class RotAny(Rot):
+    @staticmethod
+    def shift(char: str, n: int, alf: str) -> str:
+        if char in alf:
+            old_idx: int = alf.index(char)
+            new_idx: int = (old_idx + n) % len(alf)
+            return alf[new_idx]
+
+    @staticmethod
+    def cipher(text: str, alf=string.ascii_lowercase) -> str:
+        n = int(input("Enter shift (1-25): "))
+        alf_lower: str = alf.lower()
+        alf_upper: str = alf.upper()
+        result: str = ""
+        for char in text:
+            if char in alf_lower:
+                result += RotAny.shift(char, n, alf_lower)
+            elif char in alf_upper:
+                result += RotAny.shift(char, n, alf_upper)
+            else:
+                result += char
+        return result
+
+    def rot_type(self) -> str:
+        return "Rot Any"
+
