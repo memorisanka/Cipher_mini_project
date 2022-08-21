@@ -19,13 +19,13 @@ class Buffer:
         self.__buffer += message
 
     def peak(self) -> list:
-        """Funkcja zwraca wszystkie rekordy w bufferze."""
+        """Funkcja zwraca wszystkie rekordy w bufferze bez grupowania na poszczególne ROT'y"""
 
         print(self.__buffer)
         return self.__buffer
 
     def create_dict(self):
-        """Funkcja tworzy słownik z buffera. Podział na poszczególne roty."""
+        """Funkcja tworzy słownik z buffera z podziałem na poszczególne ROT'y."""
         for dct in self.__buffer:
             for key, value in dct.items():
                 if key not in self.buffer_dict.keys():

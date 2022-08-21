@@ -65,7 +65,7 @@ class Manager:
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Please write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
-        encrypted_text = {rot.rot_type(): [encoded_text]}
+        encrypted_text = {rot.rot_type(): encoded_text}
         self.__buffer.add(encrypted_text)
 
         # match rot.rot_type():
