@@ -45,7 +45,7 @@ class DataBase:
         conn.close()
 
     @staticmethod
-    def check_username(user_name: str) -> bool:
+    def check_username(user_name: str) -> str:
         """Funkcja sprawdza, czy w bazie jest podany przez użytkownika login."""
 
         conn = sqlite3.connect("users.sqlite")
@@ -53,7 +53,5 @@ class DataBase:
         cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
         val = cur.fetchone()[0]
         print(val)
-        if val == user_name:
-            cur.close()
-            return True
-        return False
+        return val
+    # TODO: do poprawienia funkcja sprawdzająca użytkownika w bazie

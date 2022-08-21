@@ -52,20 +52,22 @@ class UserLog:
 
     def new_user(self) -> None:
         """Funkcja dodaje nowego użytkownika do bazdy danych."""
-        # TODO: sprawdzanie, czy użytkownik istnieje w bazie danych
+        # TODO: wyrzuca błąd przy drugiej próbie wpisania nazwy użytkownika
 
         io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")
-        password: str = io.read("Password: ")
-        password_repeat: str = io.read("Repeat your password: ")
-        if password == password_repeat:
-            hash_password: str = Rot47.cipher(password)
-            DataBase.add_user(user_name, hash_password)
-            io.print_text("Created new user. Please log in.", "\n")
-            self.log()
-        else:
-            io.print_text("Incorrect password")
+        if DataBase.check_username(user_name) == user_name:
+            io.print_text("Choose other user name.")
             self.new_user()
-        # else:
-        #     io.print_text("Choose other user name.")
-        #     self.new_user()
+        else:
+            password: str = io.read("Password: ")
+            password_repeat: str = io.read("Repeat your password: ")
+            if password == password_repeat:
+                hash_password: str = Rot47.cipher(password)
+                DataBase.add_user(user_name, hash_password)
+                io.print_text("Created new user. Please log in.", "\n")
+                self.log()
+            else:
+                io.print_text("Incorrect password")
+                self.new_user()
+

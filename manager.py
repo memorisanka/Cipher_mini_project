@@ -68,12 +68,6 @@ class Manager:
         encrypted_text = {rot.rot_type(): encoded_text}
         self.__buffer.add(encrypted_text)
 
-        # match rot.rot_type():
-        #     case "Rot 13":
-        #         self.__buffer.add_buffer_rot13(encoded_text)
-        #     case "Rot 47":
-        #         self.__buffer.add_buffer_rot47(encoded_text)
-
     def __decrypt_text(self) -> None:
         """Funkcja deszyfruje słowa o podanym przez użytkownika indeksie."""
 
@@ -92,22 +86,6 @@ class Manager:
                 io.print_text("Index is out of range.")
         else:
             io.print_text("There are no words to decrypt.")
-
-        # if rot.rot_type() == "Rot 13":
-        #     for txt in self.__buffer.buffer_rot13:
-        #         decrypted_text = rot.cipher(txt)
-        #         self.__buffer.decrypted_rot13.append(decrypted_text)
-        #     for i in self.__buffer.decrypted_rot13:
-        #         print(i)
-        # elif rot.rot_type() == "Rot 47":
-        #     for txt in self.__buffer.buffer_rot47:
-        #         decrypted_text = rot.cipher(txt)
-        #         self.__buffer.decrypted_rot47.append(decrypted_text)
-        #     for i in self.__buffer.decrypted_rot47:
-        #         print(i)
-        # else:
-        #     io.print_text("Invalid option")
-        #     return self.__get_encryptor()
 
     def __get_encryptor(self) -> Rot:
         """Funkcja pozwala na wybór rota, którego chce użyć użytkownik."""
