@@ -10,13 +10,13 @@ from log import UserLog
 class Manager:
     def __init__(self) -> None:
         self.__is_running = True
-        self.__buffer = Buffer()
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "2": self.__decrypt_text,
-            "3": self.__buffer.peak,
+            "3": Buffer.peak,
             "4": self.__write_to_file,
-            "5": self.__end_application,
+            "5": fh.read_json,
+            "6": self.__end_application,
         }
         self.folder = False
         self.base = DataBase()
@@ -55,7 +55,8 @@ class Manager:
             "2. Decrypt (ROT47/ROT13/ROT3)",
             "3. Peak buffer",
             "4. Write to JSON file",
-            "5. Log out",
+            "5. Read from JSON file",
+            "6. Log out",
             "---> ",
         )
 
@@ -66,21 +67,21 @@ class Manager:
         text: str = io.read("Please write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
         encrypted_text = {rot.rot_type(): encoded_text}
-        self.__buffer.add(encrypted_text)
+        Buffer.add(encrypted_text)
 
     def __decrypt_text(self) -> None:
         """Funkcja deszyfruje słowa o podanym przez użytkownika indeksie."""
 
-        self.__buffer.create_dict()
+        Buffer.create_dict()
         rot: Rot = self.__get_encryptor()
         index_of_word: int = int(io.read(
-            f"Choose word index do decrypt [1 - {len(self.__buffer.buffer_dict[rot.rot_type()])}]: ")
+            f"Choose word index do decrypt [1 - {len(Buffer.buffer_dict[rot.rot_type()])}]: ")
         )
         # TODO odczyt z json i odszyfrowanie podanego słowa
 
-        if len(self.__buffer.buffer_dict[rot.rot_type()]) > 0:
-            if index_of_word <= (len(self.__buffer.buffer_dict[rot.rot_type()]) - 1):
-                decrypted_text = rot.cipher(self.__buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
+        if len(Buffer.buffer_dict[rot.rot_type()]) > 0:
+            if index_of_word <= (len(Buffer.buffer_dict[rot.rot_type()]) - 1):
+                decrypted_text = rot.cipher(Buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
                 io.print_text("Decrypted word: ", f"{decrypted_text}")
             else:
                 io.print_text("Index is out of range.")
@@ -117,8 +118,8 @@ class Manager:
         if not self.folder:
             fh.check()
             self.folder = True
-        self.__buffer.create_dict()
+        Buffer.create_dict()
         file_name = input("File_name: ")
 
-        fh.write_json(file_name, self.__buffer.buffer_dict)
+        fh.write_json(file_name, Buffer.buffer_dict)
         io.print_text("Saved to file.")

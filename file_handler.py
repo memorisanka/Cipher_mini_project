@@ -1,3 +1,4 @@
+from buffer import Buffer
 import os
 import json
 
@@ -18,10 +19,17 @@ class FileHandler:
             json.dump(data, f, indent=6)
 
     @staticmethod
-    def read_json(file_name: str) -> None:
+    def read_json() -> None:
         """Funkcja pobiera dane z pliku json."""
-
-        with open(f"files/{file_name}.json", "r") as f:
-            data = json.load(f)
+        file_name = input("podaj nazwe pliku do wczytania: ")
+        try:
+            with open(f"files/{file_name}.json", "r") as f:
+                data = json.load(f)
+                if not len(Buffer()):
+                    Buffer.buffer_dict = data
+                else:
+                    pass
+        except FileNotFoundError as e:
+            raise e
 
         print(data)
