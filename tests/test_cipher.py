@@ -53,7 +53,7 @@ class TestsCipher:
 
         assert Rot47.cipher(text) == result
 
-    @patch('builtins.input', side_effect=['10', "20", "5"])
+    @patch('builtins.input', side_effect=["10", "20", "5"])
     def test_should_return_true_if_function_encrypt_text_with_rotAny(self, input):
         text = "test"
         result = "docd"
