@@ -4,7 +4,7 @@ import sqlite3
 class DataBase:
     @staticmethod
     def create_base():
-        """Utworzenie bazy danych z trzema kolumnami: ID, username, password."""
+        """Create a database with three columns: ID, username, password."""
 
         with sqlite3.connect("users.sqlite") as conn:
             cur = conn.cursor()
@@ -18,7 +18,7 @@ class DataBase:
 
     @staticmethod
     def check_user(user_name: str, password: str) -> bool:
-        """Funkcja sprawdza, czy w bazie danych są dane użytkownika: login oraz hasło."""
+        """Check if there is a user and password in the database."""
 
         conn = sqlite3.connect("users.sqlite")
         cur = conn.cursor()
@@ -33,7 +33,7 @@ class DataBase:
 
     @staticmethod
     def add_user(user: str, password: str) -> None:
-        """Funkcja dodaje nowego użytkownika do bazy danych."""
+        """Add new user to the database."""
 
         with sqlite3.connect("users.sqlite") as conn:
             cur = conn.cursor()
@@ -45,7 +45,7 @@ class DataBase:
 
     @staticmethod
     def check_username(user_name: str) -> str:
-        """Funkcja sprawdza, czy w bazie jest podany przez użytkownika login."""
+        """Check if there is a user with given username in the database."""
         with sqlite3.connect("users.sqlite") as conn:
             cur = conn.cursor()
             cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))

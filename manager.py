@@ -23,7 +23,7 @@ class Manager:
         self.log_user = UserLog()
 
     def run(self):
-        """Uruchomienie programu."""
+        """Starting the program."""
 
         self.log_user.log_manager()
         while self.__is_running:
@@ -33,8 +33,8 @@ class Manager:
             io.print_text("\n")
 
     def __handle_instruction(self, user_text: Union[int, str]):
-        """Funkcja zarządza wykonaniem odpowiednich czynności w menu, a jeśli użytkownik poda błędną instrukcję
-        - zwraca błąd."""
+        """The method manages the execution of appropriate actions in the menu, and if the user gives an incorrect
+        instruction - returns an error."""
 
         if user_text in self.__options:
             self.__options.get(user_text)()
@@ -46,7 +46,7 @@ class Manager:
 
     @staticmethod
     def __show_menu() -> None:
-        """Instrukcje dla menu głównego programu."""
+        """Main menu of Manager."""
 
         io.print_text(
             "What do you want to do?",
@@ -61,7 +61,7 @@ class Manager:
         )
 
     def __encrypt_text(self) -> None:
-        """Funkcja szyfrująca w podanym przez użytkownika rot."""
+        """The method encrypt text with the rot provided by the user."""
 
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Please write down text to encrypt: ")
@@ -70,14 +70,13 @@ class Manager:
         Buffer.add(encrypted_text)
 
     def __decrypt_text(self) -> None:
-        """Funkcja deszyfruje słowa o podanym przez użytkownika indeksie."""
+        """The method decrypts words with the index provided by the user."""
 
         Buffer.create_dict()
         rot: Rot = self.__get_encryptor()
         index_of_word: int = int(io.read(
             f"Choose word index do decrypt [1 - {len(Buffer.buffer_dict[rot.rot_type()])}]: ")
         )
-        # TODO odczyt z json i odszyfrowanie podanego słowa
 
         if len(Buffer.buffer_dict[rot.rot_type()]) > 0:
             if index_of_word <= (len(Buffer.buffer_dict[rot.rot_type()]) - 1):
@@ -89,7 +88,7 @@ class Manager:
             io.print_text("There are no words to decrypt.")
 
     def __get_encryptor(self) -> Rot:
-        """Funkcja pozwala na wybór rota, którego chce użyć użytkownik."""
+        """User chooses rot."""
 
         io.print_text(
             "Which cipher do you want to use?",
@@ -113,7 +112,7 @@ class Manager:
             return self.__get_encryptor()
 
     def __write_to_file(self) -> None:
-        """Funkcja pozwala użytkownikowi na zapis wyników do pliku json. Nazwę pliku określa użytkownik."""
+        """Export data to json file. The filename is chosen by user."""
 
         if not self.folder:
             fh.check()
