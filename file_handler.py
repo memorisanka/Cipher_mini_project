@@ -20,7 +20,7 @@ class FileHandler:
 
     @staticmethod
     def read_json() -> None:
-        """Read data from json."""
+        """Read data from json file."""
 
         file_name = input("Enter file name: ")
         try:
