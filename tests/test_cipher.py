@@ -1,7 +1,10 @@
 from rot import Rot47, Rot13, Rot3, RotAny
+from unittest.mock import patch
 
 
 class TestsCipher:
+    """Tests for rot functions."""
+
     def test_should_return_true_if_function_encrypt_text_with_rot3(self):
         text = "test"
         result = "whvw"
@@ -52,30 +55,19 @@ class TestsCipher:
 
         assert Rot47.cipher(text) == result
 
-    # def test_should_return_true_if_function_encrypt_text_with_rotAny(self):
-    #     text = "test"
-    #     result = "whvw"
-    #
-    #     assert RotAny.cipher(text) == result
-    #
-    #     text = "Ala ma kota"
-    #     result = "Dod pd nrwd"
-    #
-    #     assert RotAny.cipher(text) == result
-    #
-    #     text = "Nauka to lubię!"
-    #     result = "Qdxnd wr oxelę!"
-    #
-    #     assert RotAny.cipher(text) == result
+    @patch('builtins.input', side_effect=["10", "20", "5"])
+    def test_should_return_true_if_function_encrypt_text_with_rotAny(self, input):
+        text = "test"
+        result = "docd"
 
+        assert RotAny.cipher(text) == result
 
-def main():
-    tests_cipher = TestsCipher()
-    tests_cipher.test_should_return_true_if_function_encrypt_text_with_rot3()
-    tests_cipher.test_should_return_true_if_function_encrypt_text_with_rot13()
-    tests_cipher.test_should_return_true_if_function_encrypt_text_with_rot47()
-    # tests_cipher.test_should_return_true_if_function_encrypt_text_with_rotAny()
+        text = "Ala ma kota"
+        result = "Ufu gu einu"
 
+        assert RotAny.cipher(text) == result
 
-if __name__ == "__main__":
-    main()
+        text = "Nauka to lubię!"
+        result = "Sfzpf yt qzgnę!"
+
+        assert RotAny.cipher(text) == result

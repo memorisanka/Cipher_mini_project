@@ -10,20 +10,20 @@ from log import UserLog
 class Manager:
     def __init__(self) -> None:
         self.__is_running = True
-        self.__buffer = Buffer()
         self.__options: dict[str, Callable] = {
             "1": self.__encrypt_text,
             "2": self.__decrypt_text,
-            "3": self.__buffer.peak,
+            "3": Buffer.peak,
             "4": self.__write_to_file,
-            "5": self.__end_application,
+            "5": fh.read_json,
+            "6": self.__end_application,
         }
         self.folder = False
         self.base = DataBase()
         self.log_user = UserLog()
 
     def run(self):
-        """Uruchomienie programu."""
+        """Starting the program."""
 
         self.log_user.log_manager()
         while self.__is_running:
@@ -33,8 +33,8 @@ class Manager:
             io.print_text("\n")
 
     def __handle_instruction(self, user_text: Union[int, str]):
-        """Funkcja zarządza wykonaniem odpowiednich czynności w menu, a jeśli użytkownik poda błędną instrukcję
-        - zwraca błąd."""
+        """The method manages the execution of appropriate actions in the menu, and if the user gives an incorrect
+        instruction - returns an error."""
 
         if user_text in self.__options:
             self.__options.get(user_text)()
@@ -46,7 +46,7 @@ class Manager:
 
     @staticmethod
     def __show_menu() -> None:
-        """Instrukcje dla menu głównego programu."""
+        """Main menu of Manager."""
 
         io.print_text(
             "What do you want to do?",
@@ -55,32 +55,32 @@ class Manager:
             "2. Decrypt (ROT47/ROT13/ROT3)",
             "3. Peak buffer",
             "4. Write to JSON file",
-            "5. Log out",
+            "5. Read from JSON file",
+            "6. Log out",
             "---> ",
         )
 
     def __encrypt_text(self) -> None:
-        """Funkcja szyfrująca w podanym przez użytkownika rot."""
+        """The method encrypt text with the rot provided by the user."""
 
         rot: Rot = self.__get_encryptor()
         text: str = io.read("Please write down text to encrypt: ")
         encoded_text: str = rot.cipher(text)
         encrypted_text = {rot.rot_type(): encoded_text}
-        self.__buffer.add(encrypted_text)
+        Buffer.add(encrypted_text)
 
     def __decrypt_text(self) -> None:
-        """Funkcja deszyfruje słowa o podanym przez użytkownika indeksie."""
+        """The method decrypts words with the index provided by the user."""
 
-        self.__buffer.create_dict()
+        Buffer.create_dict()
         rot: Rot = self.__get_encryptor()
         index_of_word: int = int(io.read(
-            f"Choose word index do decrypt [1 - {len(self.__buffer.buffer_dict[rot.rot_type()])}]: ")
+            f"Choose word index do decrypt [1 - {len(Buffer.buffer_dict[rot.rot_type()])}]: ")
         )
-        # TODO odczyt z json i odszyfrowanie podanego słowa
 
-        if len(self.__buffer.buffer_dict[rot.rot_type()]) > 0:
-            if index_of_word <= (len(self.__buffer.buffer_dict[rot.rot_type()]) - 1):
-                decrypted_text = rot.cipher(self.__buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
+        if len(Buffer.buffer_dict[rot.rot_type()]) > 0:
+            if index_of_word <= (len(Buffer.buffer_dict[rot.rot_type()]) - 1):
+                decrypted_text = rot.cipher(Buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
                 io.print_text("Decrypted word: ", f"{decrypted_text}")
             else:
                 io.print_text("Index is out of range.")
@@ -88,7 +88,7 @@ class Manager:
             io.print_text("There are no words to decrypt.")
 
     def __get_encryptor(self) -> Rot:
-        """Funkcja pozwala na wybór rota, którego chce użyć użytkownik."""
+        """User chooses rot."""
 
         io.print_text(
             "Which cipher do you want to use?",
@@ -112,13 +112,13 @@ class Manager:
             return self.__get_encryptor()
 
     def __write_to_file(self) -> None:
-        """Funkcja pozwala użytkownikowi na zapis wyników do pliku json. Nazwę pliku określa użytkownik."""
+        """Export data to json file. The filename is chosen by user."""
 
         if not self.folder:
             fh.check()
             self.folder = True
-        self.__buffer.create_dict()
+        Buffer.create_dict()
         file_name = input("File_name: ")
 
-        fh.write_json(file_name, self.__buffer.buffer_dict)
+        fh.write_json(file_name, Buffer.buffer_dict)
         io.print_text("Saved to file.")

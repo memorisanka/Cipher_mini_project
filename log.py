@@ -52,7 +52,6 @@ class UserLog:
 
     def new_user(self) -> None:
         """Funkcja dodaje nowego użytkownika do bazdy danych."""
-        # TODO: wyrzuca błąd przy drugiej próbie wpisania nazwy użytkownika
 
         io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")
