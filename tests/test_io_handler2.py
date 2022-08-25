@@ -4,6 +4,7 @@ from io import StringIO
 
 class TestIO:
     def test_io_print_text(self, capsys):
+        """Test for io.print_text() should print each text in new line."""
 
         io.print_text("test1", "test2")
         out, err = capsys.readouterr()
@@ -11,6 +12,10 @@ class TestIO:
         assert out == "test1\ntest2\n"
 
     def test_io_read(self, monkeypatch):
-        number_inputs = StringIO("2")
+        """Test for io.read should get text from user."""
+
+        number_inputs = StringIO("test")
         monkeypatch.setattr('sys.stdin', number_inputs)
-        assert io.read(number_inputs) == "2"
+
+        assert io.read(number_inputs) == "test"
+
