@@ -14,3 +14,8 @@ class TestBuffer:
 
         self.test_buffer.add({"Test1": "test1"})
         assert self.test_buffer.__len__() == 2
+
+    def test_peak_buffer(self):
+        """Should print buffer_dict's content."""
+
+        assert self.test_buffer.peak() == {"Test": ["test"], "Test1": ["test1"]}
