@@ -15,7 +15,6 @@ class TestIO:
         """Test for io.read should get text from user."""
 
         number_inputs = StringIO("test")
-        monkeypatch.setattr('sys.stdin', number_inputs)
+        monkeypatch.setattr("sys.stdin", number_inputs)
 
         assert io.read(number_inputs) == "test"
-

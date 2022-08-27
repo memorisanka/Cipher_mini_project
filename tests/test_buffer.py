@@ -2,7 +2,6 @@ from buffer import Buffer
 
 
 class TestBuffer:
-
     def setup(self):
         self.test_buffer = Buffer()
 
@@ -22,9 +21,12 @@ class TestBuffer:
         assert self.test_buffer.__len__() == 4
 
     def test_peak_buffer(self):
-        """Should return buffer_dict's content."""
+        """Should create dictionary from buffer and return its content."""
 
         assert self.test_buffer.peak() == {
             "Test": ["test", "test_test_test"],
             "Test1": ["test1", "test_test"],
         }
+
+    def teardown(self):
+        del self.test_buffer

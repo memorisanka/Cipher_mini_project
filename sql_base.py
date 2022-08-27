@@ -48,7 +48,9 @@ class DataBase:
         """Check if there is a user with given username in the database."""
         with sqlite3.connect("users.sqlite") as conn:
             cur = conn.cursor()
-            cur.execute(f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,))
+            cur.execute(
+                f"SELECT user_name FROM Users WHERE user_name = ?", (user_name,)
+            )
             val = cur.fetchone()
 
         if val:

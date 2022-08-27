@@ -2,7 +2,6 @@ class Buffer:
     __buffer = []
     buffer_dict = {}
 
-
     def __len__(self):
         return len(Buffer.__buffer)
 
@@ -35,4 +34,3 @@ class Buffer:
                     Buffer.buffer_dict[key] += [value]
                 else:
                     Buffer.buffer_dict[key] += [value]
-

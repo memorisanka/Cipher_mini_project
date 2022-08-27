@@ -6,7 +6,7 @@ from unittest.mock import patch, call
 class TestsInputOutputHandler(unittest.TestCase):
     """Tests for Input Output Handler"""
 
-    @patch('builtins.input', side_effect=["10", "20", "5"])
+    @patch("builtins.input", side_effect=["10", "20", "5"])
     def test_io_read_method(self, input):
         """Test for method IO read."""
 
@@ -23,5 +23,3 @@ class TestsInputOutputHandler(unittest.TestCase):
         print("test2")
 
         assert mocked_print.mock_calls == [call("test1"), call("test2")]
-
-

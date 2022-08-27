@@ -74,13 +74,17 @@ class Manager:
 
         Buffer.create_dict()
         rot: Rot = self.__get_encryptor()
-        index_of_word: int = int(io.read(
-            f"Choose word index do decrypt [1 - {len(Buffer.buffer_dict[rot.rot_type()])}]: ")
+        index_of_word: int = int(
+            io.read(
+                f"Choose word index do decrypt [1 - {len(Buffer.buffer_dict[rot.rot_type()])}]: "
+            )
         )
 
         if len(Buffer.buffer_dict[rot.rot_type()]) > 0:
             if index_of_word <= (len(Buffer.buffer_dict[rot.rot_type()]) - 1):
-                decrypted_text = rot.cipher(Buffer.buffer_dict[rot.rot_type()][index_of_word - 1])
+                decrypted_text = rot.cipher(
+                    Buffer.buffer_dict[rot.rot_type()][index_of_word - 1]
+                )
                 io.print_text("Decrypted word: ", f"{decrypted_text}")
             else:
                 io.print_text("Index is out of range.")
@@ -96,7 +100,7 @@ class Manager:
             "1: ROT47",
             "2: ROT13",
             "3: ROT3",
-            "4: Any shift"
+            "4: Any shift",
         )
         encryptor_no = io.read("")
         if encryptor_no == "1":
