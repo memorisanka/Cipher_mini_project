@@ -5,6 +5,9 @@ class Buffer:
     def __len__(self):
         return len(Buffer.__buffer)
 
+    def clear(self):
+        self.__buffer.clear()
+
     @staticmethod
     def add(message: dict) -> None:
         """Add record to buffer."""
@@ -22,7 +25,6 @@ class Buffer:
         """Create dictionary from buffer"""
         Buffer.create_dict()
         print(Buffer.buffer_dict)
-        return Buffer.buffer_dict
 
     @staticmethod
     def create_dict():

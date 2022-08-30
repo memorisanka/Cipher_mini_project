@@ -2,12 +2,9 @@ from buffer import Buffer
 
 
 class TestBuffer:
-    def setup(self):
-        self.test_buffer = Buffer()
-
     def test_add_to_buffer(self):
         """Should add record to buffer."""
-
+        self.test_buffer = Buffer()
         self.test_buffer.add({"Test": "test"})
         assert self.test_buffer.__len__() == 1
 
@@ -19,14 +16,15 @@ class TestBuffer:
 
         self.test_buffer.add({"Test": "test_test_test"})
         assert self.test_buffer.__len__() == 4
+        self.test_buffer.clear()
 
-    def test_peak_buffer(self):
+    def test_peak_buffer(self, capsys):
         """Should create dictionary from buffer and return its content."""
 
-        assert self.test_buffer.peak() == {
-            "Test": ["test", "test_test_test"],
-            "Test1": ["test1", "test_test"],
-        }
+        self.test_buffer = Buffer()
+        self.test_buffer.add({"Test": "test"})
+        self.test_buffer.peak()
+        out, err = capsys.readouterr()
+        assert out == "{'Test': ['test']}\n"
 
-    def teardown(self):
-        del self.test_buffer
+        self.test_buffer.clear()

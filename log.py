@@ -8,7 +8,7 @@ class UserLog:
         self.counter = 0
 
     def log_manager(self) -> None:
-        """Panel logowania do programu. W zależności od wybranej opcji zwraca odpowiednią funkcję."""
+        """Program login panel. Depending on the selected option, it returns the appropriate function."""
 
         io.print_text(
             "Welcome to Cipher!",
@@ -30,10 +30,10 @@ class UserLog:
             return self.log_manager()
 
     def log(self) -> None:
-        """Logowanie istniejącego w bazie użytkownika.
-        Funkcja pobiera od użytkownika login oraz hasło, szyfruje hasło i sprawdza, czy dane zgadzają się
-        z danymi w bazie danych. Gdy podane zostaną błędne dane, użytkownik ma 3 próby na podanie właściwych, inaczej
-        program kończy działanie."""
+        """Logging in an existing user in the database.
+        The function retrieves the login and password from the user, encrypts them and checks if the data is correct
+        with the data in the database. When incorrect data is provided, the user has 3 attempts to enter the
+        correct data, otherwise the program exits."""
 
         io.print_text("Please, log in", "---------------------")
         user_name: str = io.read("User name: ")
@@ -43,7 +43,8 @@ class UserLog:
             io.print_text("Logged in!", "\n")
         elif not DataBase.check_user(user_name, password):
             if self.counter < 3:
-                io.print_text("Invalid username or password", "Try again", f"Trials left: {3 - self.counter}")
+                io.print_text("Invalid username or password", "Try again",
+                              f"Trials left: {3 - self.counter}")
                 self.counter += 1
                 self.log()
             else:
@@ -51,7 +52,7 @@ class UserLog:
                 exit()
 
     def new_user(self) -> None:
-        """Funkcja dodaje nowego użytkownika do bazdy danych."""
+        """The function adds a new user to the database."""
 
         io.print_text("Create new user", "-------------------")
         user_name: str = io.read("User name: ")

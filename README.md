@@ -10,10 +10,10 @@
 ## General info
 <details>
 <summary>Click here to see general information about <b>Project Cipher</b>!</summary>
-<b>Project Cipher</b> is a mini-project. It allows to 
+<b>Project Cipher</b> is a project. It allows to 
 encrypt the given strings with the ROT cipher. ROT 3, 
-ROT 13, ROT 47 or ROT(1-25) can be used. In the latter case, 
-the user specifies a shift.
+ROT 13, ROT 47 or ROT(1-25, the user specifies a shift) can be used. 
+.
 <br><br>
 <b>Rot-N/Rot cipher (for Rotation)</b> is a simple character substitution based on a shift/rotation 
 of N letters in an alphabet. E.g. one letter is replaced by another (always the same) that 
@@ -38,5 +38,8 @@ words to json, decrypt a given word according to the index provided by the user.
 ## Technologies
 <ul>
 <li>Python</li>
+<li>Pytest</li>
 <li>SQL Lite</li>
 </ul>
+
+#### Sources
