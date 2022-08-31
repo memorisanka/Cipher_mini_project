@@ -70,4 +70,3 @@ class UserLog:
             else:
                 io.print_text("Incorrect password")
                 self.new_user()
-
