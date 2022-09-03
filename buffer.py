@@ -2,32 +2,33 @@ class Buffer:
     __buffer = []
     buffer_dict = {}
 
-
     def __len__(self):
         return len(Buffer.__buffer)
 
+    def clear(self):
+        self.__buffer.clear()
+
     @staticmethod
     def add(message: dict) -> None:
-        """Dodawanie rekordów do buffera."""
+        """Add record to buffer."""
 
         Buffer.__buffer.append(message)
 
     @staticmethod
     def add_list(message: str) -> None:
-        """Dodatnie listy do buffera."""
+        """Add record to buffer"""
 
         Buffer.__buffer += message
 
     @staticmethod
     def peak() -> list:
-        """Funkcja zwraca wszystkie rekordy w bufferze bez grupowania na poszczególne ROT'y"""
+        """Create dictionary from buffer"""
         Buffer.create_dict()
         print(Buffer.buffer_dict)
-        return Buffer.buffer_dict
 
     @staticmethod
     def create_dict():
-        """Funkcja tworzy słownik z buffera z podziałem na poszczególne ROT'y."""
+        """Create dict from buffer."""
         for dct in Buffer.__buffer:
             for key, value in dct.items():
                 if key not in Buffer.buffer_dict.keys():
@@ -35,4 +36,3 @@ class Buffer:
                     Buffer.buffer_dict[key] += [value]
                 else:
                     Buffer.buffer_dict[key] += [value]
-
