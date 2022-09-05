@@ -3,6 +3,7 @@
 ### Content of Project
 * [General info](#general-info)
 * [Modules](#modules)
+* [Setup](#setup)
 * [Technologies](#technologies)
 
 
@@ -25,7 +26,7 @@ character 33 ! and the character 126 ~.
 </details>
 
 ## Modules
-<details><summary>Click here to see informations about <b>modules</b>!</summary>
+<details><summary>Click here to see information about <b>modules</b>!</summary>
 The program consists of a login module and a manager. <br><br>
 <b>The login module</b> uses the SQL lite database. The module checks if the data provided during logging in are identical 
 to those in the database. There is also an option to create a new user. The module checks if the given username 
@@ -35,12 +36,14 @@ is available. The password stored in the database is encrypted.
 words to json, decrypt a given word according to the index provided by the user.
 </details>
 
+## Setup
+<details><summary> How to run program</summary>
+Run main.py
+</details>
+
 ## Technologies
 <ul>
 <li>Python</li>
 <li>Pytest</li>
 <li>SQL Lite</li>
 </ul>
-
-#### Sources
-https://pl.python.org/forum/
