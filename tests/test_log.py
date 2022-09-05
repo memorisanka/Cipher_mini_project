@@ -35,7 +35,7 @@ class TestLog:
 
         del ul
 
-    def test_log_with_incorrect_user_input(self, monkeypatch):
+    def test_log_with_two_incorrect_user_inputs(self, monkeypatch):
         name = "test"
         password = "test43423"
         password2 = "test"
